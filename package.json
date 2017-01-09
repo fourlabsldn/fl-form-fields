@@ -1,0 +1,11 @@
+{
+  "name": "fl-form-fields",
+  "version": "0.1.0",
+  "description": "Fields for fl-form-builder",
+  "main": "index.js",
+  "author": "Lazamar @ FourLabs",
+  "license": "MIT",
+  "devDependencies": {
+    "fl-form-builder": "https://github.com/fourlabsldn/fl-form-builder.git"
+  }
+}
