@@ -6,6 +6,9 @@
   "author": "Lazamar @ FourLabs",
   "license": "MIT",
   "devDependencies": {
-    "fl-form-builder": "https://github.com/fourlabsldn/fl-form-builder.git"
+    "fl-form-builder": "https://github.com/fourlabsldn/fl-form-builder.git",
+    "gulp": "^3.9.1",
+    "gulp-jasmine-phantom": "^3.0.0",
+    "gulp-organiser": "^1.0.6"
   }
 }
