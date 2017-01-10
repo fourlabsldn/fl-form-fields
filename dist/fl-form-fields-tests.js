@@ -8382,6 +8382,84 @@ describe("option-type update.updateOption", function () {
 });
 
 /* eslint-env jasmine */
+describe("action addOption", function () {
+  it("outputs the correct type", function () {
+    var _addOption = addOption({}),
+        type = _addOption.type;
+
+    expect(type).toBe("addOption");
+  });
+
+  it("created the correct keys", function () {
+    var content = { a: 1, b: 2 };
+    var action = addOption(content);
+    expect(action.initialState).toBe(content);
+  });
+});
+
+describe("action removeOption", function () {
+  it("outputs the correct type", function () {
+    var _removeOption = removeOption({}),
+        type = _removeOption.type;
+
+    expect(type).toBe("removeOption");
+  });
+});
+
+describe("action removeIfOptionIsNull", function () {
+  it("outputs the correct type", function () {
+    var _removeIfOptionIsNull = removeIfOptionIsNull({}),
+        type = _removeIfOptionIsNull.type;
+
+    expect(type).toBe("removeIfOptionIsNull");
+  });
+
+  it("created the correct keys", function () {
+    var idx = 2;
+    var ev = { target: {} };
+    var action = removeIfOptionIsNull(idx, ev);
+    expect(action.optionIndex).toBe(idx);
+    expect(action.event).toBe(ev);
+  });
+});
+
+describe("action updateOption", function () {
+  it("outputs the correct type", function () {
+    var _updateOption = updateOption({}),
+        type = _updateOption.type;
+
+    expect(type).toBe("updateOption");
+  });
+
+  it("created the correct keys", function () {
+    var idx = 2;
+    var ev = { target: {} };
+    var action = updateOption(idx, ev);
+    expect(action.optionIndex).toBe(idx);
+    expect(action.event).toBe(ev);
+  });
+});
+
+describe("action updateProperty", function () {
+  it("outputs the correct type", function () {
+    var _updateProperty = updateProperty({}),
+        type = _updateProperty.type;
+
+    expect(type).toBe("updateProperty");
+  });
+
+  it("created the correct keys", function () {
+    var init = {};
+    var name = "asdf";
+    var ev = { target: {} };
+    var action = updateProperty(init, name, ev);
+    expect(action.initialState).toBe(init);
+    expect(action.propName).toBe(name);
+    expect(action.event).toBe(ev);
+  });
+});
+
+/* eslint-env jasmine */
 describe("Smoke test", function () {
   it("exports the public API", function () {
     expect(Object.keys(allTypes).includes("baseTypes")).toBeTruthy();

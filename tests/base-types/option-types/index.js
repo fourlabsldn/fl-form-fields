@@ -1,1 +1,2 @@
-import "./update"
+import "./update";
+import "./actions";
