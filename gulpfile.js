@@ -11,20 +11,32 @@ organiser.registerAll("./gulp-tasks", {
     src: "./tests/unit/unit.js",
   },
   "transpile-react": {
-    watch: path.join(src, "/**/*.js"),
-    src: path.join(src, "index.js"),
-    dest,
-    rename: "fl-form-fields.js",
-    config: {
-      external: ["react", "react-dom"],
-      format: "umd",
-      moduleName: "flFormFields",
+    main: {
+      watch: path.join(src, "/**/*.js"),
+      src: path.join(src, "index.js"),
+      dest,
+      rename: "fl-form-fields.js",
+      config: {
+        external: ["react", "react-dom"],
+        format: "umd",
+        moduleName: "flFormFields",
+      },
+    },
+    tests: {
+      watch: "tests/**/*.js",
+      src: "tests/index.js",
+      dest,
+      rename: "fl-form-fields-tests.js",
+      config: {
+        external: ["react", "react-dom"],
+        format: "iife",
+      },
     },
   },
-  'browser-sync': {
-    src: '.', // it doesn't matter, it's just so the task object is not ignored.
-    reloadOn: ['transpile-react'], // reload page when these tasks happen
-    startPath: 'examples/all_fields/index.html',
-    baseDir: './',
+  "browser-sync": {
+    src: ".", // it doesn"t matter, it"s just so the task object is not ignored.
+    reloadOn: ["transpile-react"], // reload page when these tasks happen
+    startPath: "examples/all_fields/index.html",
+    baseDir: "./",
   },
 });

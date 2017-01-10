@@ -6,7 +6,8 @@
     "author": "Lazamar @ FourLabs",
     "license": "MIT",
     "scripts": {
-        "demo": "gulp browser-sync"
+        "demo": "gulp browser-sync",
+        "test": "gulp test-headless"
     },
     "devDependencies": {
         "babel-plugin-lodash": "^3.2.11",
@@ -22,6 +23,7 @@
         "gulp-rename": "^1.2.2",
         "gulp-sourcemaps": "^2.3.0",
         "gulp-uglify": "^2.0.0",
+        "jasmine-core": "^2.5.2",
         "lodash": "^4.17.4",
         "path": "^0.12.7",
         "rollup-plugin-babel": "^2.7.1",
