@@ -1,13 +1,24 @@
 /* eslint-disable quote-props */
 // List all available tasks
 
-const src = 'src';
-const dest = 'dist';
-const path = require('path');
+const src = "src";
+const dest = "dist";
+const path = require("path");
 
-const organiser = require('gulp-organiser');
-organiser.registerAll('./gulp-tasks', {
-  'test-headless': {
-    src: './tests/unit/unit.js',
+const organiser = require("gulp-organiser");
+organiser.registerAll("./gulp-tasks", {
+  "test-headless": {
+    src: "./tests/unit/unit.js",
+  },
+  "transpile-react": {
+    watch: path.join(src, "/**/*.js"),
+    src: path.join(src, "index.js"),
+    dest,
+    config: {
+      external: ["react", "react-dom"],
+      exports: "named",
+      format: "umd",
+      moduleName: "flFormFields",
+    },
   },
 });
