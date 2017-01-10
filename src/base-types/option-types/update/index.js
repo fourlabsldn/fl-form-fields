@@ -12,6 +12,7 @@ const possibleActions = {
   updateProperty,
 };
 
-export default function update(state, action) {
-  return possibleActions[action.type](state);
-}
+const update = (state, action) =>
+  possibleActions[action.type](state, action);
+
+export default update;

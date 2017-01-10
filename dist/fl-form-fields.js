@@ -7454,9 +7454,9 @@ var possibleActions = {
   updateProperty: updateProperty$1
 };
 
-function update(state, action) {
-  return possibleActions[action.type](state);
-}
+var update = function update(state, action) {
+  return possibleActions[action.type](state, action);
+};
 
 /* eslint-disable new-cap */
 

@@ -1,5 +1,6 @@
 /* eslint-env jasmine */
-import updateOption from "../../../../src/base-types/option-types/update";
+import update from "../../../../src/base-types/option-types/update";
+import { updateOption } from "../../../../src/base-types/option-types/actions";
 
 describe("option-type update.updateOption", () => {
   const mockEvent = {
@@ -18,27 +19,23 @@ describe("option-type update.updateOption", () => {
     ],
   };
 
-  it("is curried", () => {
-    const completeInvocation = updateOption(mockState, 0, mockEvent);
-    const curriedInvocation = updateOption(mockState)(0)(mockEvent);
-    expect(completeInvocation.prop1).toBe(curriedInvocation.prop1);
-    expect(completeInvocation.prop2).toBe(curriedInvocation.prop2);
-    expect(completeInvocation.options.length).toBe(curriedInvocation.options.length);
-  });
-
   it("changes the option at the correct index", () => {
-    const newState = updateOption(mockState, 0, mockEvent);
-    expect(newState.options[0]).toBe(mockEvent.target.value);
+    const action = updateOption(0, mockEvent);
+    const newState = update(mockState, action);
+    console.log(newState);
+    expect(newState.options[0].caption).toBe(mockEvent.target.value);
   });
 
   it("does not change other options", () => {
-    const newState = updateOption(mockState, 0, mockEvent);
-    expect(newState.options[1]).toBe(mockState.options[1]);
-    expect(newState.options[2]).toBe(mockState.options[1]);
+    const action = updateOption(0, mockEvent);
+    const newState = update(mockState, action);
+    expect(newState.options[1].caption).toBe(mockState.options[1].caption);
+    expect(newState.options[2].caption).toBe(mockState.options[2].caption);
   });
 
   it("does not change other properties of state", () => {
-    const newState = updateOption(mockState, 0, mockEvent);
+    const action = updateOption(0, mockEvent);
+    const newState = update(mockState, action);
     expect(newState.prop1).toBe(mockState.prop1);
     expect(newState.prop2).toBe(mockState.prop2);
   });

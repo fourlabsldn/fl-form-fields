@@ -7475,9 +7475,9 @@ var possibleActions = {
   updateProperty: updateProperty$1
 };
 
-function update(state, action) {
-  return possibleActions[action.type](state);
-}
+var update = function update(state, action) {
+  return possibleActions[action.type](state, action);
+};
 
 /* eslint-disable new-cap */
 
@@ -8355,27 +8355,23 @@ describe("option-type update.updateOption", function () {
     options: [{ caption: "default caption1" }, { caption: "default caption2" }, { caption: "default caption3" }]
   };
 
-  it("is curried", function () {
-    var completeInvocation = update(mockState, 0, mockEvent);
-    var curriedInvocation = update(mockState)(0)(mockEvent);
-    expect(completeInvocation.prop1).toBe(curriedInvocation.prop1);
-    expect(completeInvocation.prop2).toBe(curriedInvocation.prop2);
-    expect(completeInvocation.options.length).toBe(curriedInvocation.options.length);
-  });
-
   it("changes the option at the correct index", function () {
-    var newState = update(mockState, 0, mockEvent);
-    expect(newState.options[0]).toBe(mockEvent.target.value);
+    var action = updateOption(0, mockEvent);
+    var newState = update(mockState, action);
+    console.log(newState);
+    expect(newState.options[0].caption).toBe(mockEvent.target.value);
   });
 
   it("does not change other options", function () {
-    var newState = update(mockState, 0, mockEvent);
-    expect(newState.options[1]).toBe(mockState.options[1]);
-    expect(newState.options[2]).toBe(mockState.options[1]);
+    var action = updateOption(0, mockEvent);
+    var newState = update(mockState, action);
+    expect(newState.options[1].caption).toBe(mockState.options[1].caption);
+    expect(newState.options[2].caption).toBe(mockState.options[2].caption);
   });
 
   it("does not change other properties of state", function () {
-    var newState = update(mockState, 0, mockEvent);
+    var action = updateOption(0, mockEvent);
+    var newState = update(mockState, action);
     expect(newState.prop1).toBe(mockState.prop1);
     expect(newState.prop2).toBe(mockState.prop2);
   });
