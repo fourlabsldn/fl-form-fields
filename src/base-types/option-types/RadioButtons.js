@@ -1,16 +1,24 @@
-import buildOptionsFieldConstructor from './buildOptionsFieldConstructor';
-import { renderRadioOrCheckboxOptions } from './options-utils';
+/* eslint-disable new-cap */
+import View from "./utils/View";
+import defaultConfig from "./utils/default-config";
 
-const typeInfo = {
-  // Compulsory
-  type: 'RadioButtons',
-  displayName: 'Radio Button',
-  group: 'Options Components',
+const info =
+  {
+    type: "RadioButtons",
+    displayName: "Radio Button",
+    group: "Options Components",
+  };
 
-  // Field type specific
-  htmlInputType: 'radio',
+const initialState = () =>
+  ({
+    // Field type specific
+    ...defaultConfig,
+    ...info,
+    htmlInputType: "radio",
+  });
+
+export default {
+  info,
+  initialState,
+  RenderEditor: View(initialState),
 };
-
-const RadioButtons = buildOptionsFieldConstructor(typeInfo, renderRadioOrCheckboxOptions);
-
-export default RadioButtons;

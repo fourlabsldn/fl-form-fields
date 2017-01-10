@@ -1,7 +1,7 @@
 // Field Types
-import RadioButtons from "./option-types.new/RadioButtons";
-import Checkboxes from "./option-types.new/Checkboxes";
-import Dropdown from "./option-types.new/Dropdown";
+import RadioButtons from "./option-types/RadioButtons";
+import Checkboxes from "./option-types/Checkboxes";
+import Dropdown from "./option-types/Dropdown";
 import TextBox from "./text-types/TextBox";
 import TextArea from "./text-types/TextArea";
 import EmailBox from "./text-types/EmailBox";

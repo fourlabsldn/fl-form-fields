@@ -1,13 +1,24 @@
-import buildOptionsFieldConstructor from './buildOptionsFieldConstructor';
-import { renderDropdownOptions } from './options-utils';
+/* eslint-disable new-cap */
+import View from "./utils/View";
+import defaultConfig from "./utils/default-config";
 
-const typeInfo = {
-  // Compulsory
-  type: 'Dropdown',
-  displayName: 'Dropdown',
-  group: 'Options Components',
+const info =
+  {
+    type: "Checkboxes",
+    displayName: "Checkboxes",
+    group: "Options Components",
+  };
+
+const initialState = () =>
+  ({
+    // Field type specific
+    ...defaultConfig,
+    ...info,
+    htmlInputType: "checkbox",
+  });
+
+export default {
+  info,
+  initialState,
+  RenderEditor: View(initialState),
 };
-
-const Dropdown = buildOptionsFieldConstructor(typeInfo, renderDropdownOptions);
-
-export default Dropdown;
