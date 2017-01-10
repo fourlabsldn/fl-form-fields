@@ -7654,6 +7654,8 @@ var updateField = curry_1$1(function (update, state, initialState, fieldName, ev
 
 var templateTypeInfo = {
   // Compulsory
+  required: false,
+  configShowing: false,
   type: 'TextField',
   group: 'Text Components',
   displayName: 'Text field',
@@ -8128,6 +8130,7 @@ var typeInfo = {
   displayName: 'Date Field',
   group: 'Text Components',
   required: false,
+  configShowing: false,
 
   // Component specific fields
   title: 'My date component',

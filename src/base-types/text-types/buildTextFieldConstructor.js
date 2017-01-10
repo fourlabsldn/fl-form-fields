@@ -25,6 +25,8 @@ const updateField = curry((update, state, initialState, fieldName, event) => {
 
 const templateTypeInfo = {
   // Compulsory
+  required: false,
+  configShowing: false,
   type: 'TextField',
   group: 'Text Components',
   displayName: 'Text field',

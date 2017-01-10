@@ -168,6 +168,7 @@ const typeInfo = {
   displayName: 'Date Field',
   group: 'Text Components',
   required: false,
+  configShowing: false,
 
   // Component specific fields
   title: 'My date component',
