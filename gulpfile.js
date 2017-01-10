@@ -14,11 +14,18 @@ organiser.registerAll("./gulp-tasks", {
     watch: path.join(src, "/**/*.js"),
     src: path.join(src, "index.js"),
     dest,
+    rename: "fl-form-fields.js",
     config: {
       external: ["react", "react-dom"],
       exports: "named",
       format: "umd",
       moduleName: "flFormFields",
     },
+  },
+  'browser-sync': {
+    src: '.', // it doesn't matter, it's just so the task object is not ignored.
+    reloadOn: ['transpile-react'], // reload page when these tasks happen
+    startPath: 'examples/all_fields/index.html',
+    baseDir: './',
   },
 });

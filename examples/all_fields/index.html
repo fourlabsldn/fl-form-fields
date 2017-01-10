@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <script scr="../../node_modules/fl-form-builder/dist/fl-form-builder"></script>
-</head>
-<body>
-  
 
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <!-- Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+    <!-- Form Builder -->
+    <link rel="stylesheet" href="../../node_modules/fl-form-builder/dist/fl-form-builder.css">
+    <script src="../../node_modules/fl-form-builder/dist/fl-form-builder.js"></script>
+
+    <!-- Form Fields -->
+    <script src="../../dist/fl-form-fields.js"></script>
+
+    <style>
+      body {
+        max-width: 700px;
+        margin: auto;
+      }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-builder-container"></div>
+
+    <script>
+        // Our custom components array:
+        const customComponents = flFormFields;
+        const container = document.querySelector('.form-builder-container');
+
+        new FormBuilder(container, customComponents);
+    </script>
 </body>
+
 </html>
