@@ -1,4 +1,4 @@
-// npm install --save-dev gulp path gulp-uglify vinyl-buffer gulp-flatmap rollup-stream rollup-plugin-babel vinyl-source-stream gulp-sourcemaps rollup-plugin-replace rollup-plugin-commonjs rollup-plugin-node-resolve gulp-organiser lodash  babel-preset-es2017 babel-preset-react
+// npm install --save-dev gulp path gulp-uglify babel-plugin-lodash vinyl-buffer gulp-flatmap rollup-stream rollup-plugin-babel vinyl-source-stream gulp-sourcemaps rollup-plugin-replace rollup-plugin-commonjs rollup-plugin-node-resolve gulp-organiser lodash  babel-preset-es2017 babel-preset-react
 
 /**
   Hidden dependencies:
@@ -44,6 +44,7 @@ const DEFAULT_CONFIG = {
       exclude: 'node_modules/**',
       babelrc: false,
       presets: ['es2017', 'react'],
+      plugins: ['lodash'],
     }),
     // TODO: Change this from 'development' to 'production' during production
     replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),

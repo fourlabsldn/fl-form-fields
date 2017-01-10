@@ -1,12 +1,12 @@
 // Field Types
-import RadioButtons from "./options-fields/RadioButtons";
-import Checkboxes from "./options-fields/Checkboxes";
-import Dropdown from "./options-fields/Dropdown";
-import TextBox from "./text-fields/TextBox";
-import TextArea from "./text-fields/TextArea";
-import EmailBox from "./text-fields/EmailBox";
-import NumberBox from "./text-fields/NumberBox";
-import TelephoneBox from "./text-fields/TelephoneBox";
+import RadioButtons from "./option-types/RadioButtons";
+import Checkboxes from "./option-types/Checkboxes";
+import Dropdown from "./option-types/Dropdown";
+import TextBox from "./text-types/TextBox";
+import TextArea from "./text-types/TextArea";
+import EmailBox from "./text-types/EmailBox";
+import NumberBox from "./text-types/NumberBox";
+import TelephoneBox from "./text-types/TelephoneBox";
 
 export default [
   RadioButtons,

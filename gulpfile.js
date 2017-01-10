@@ -17,7 +17,6 @@ organiser.registerAll("./gulp-tasks", {
     rename: "fl-form-fields.js",
     config: {
       external: ["react", "react-dom"],
-      exports: "named",
       format: "umd",
       moduleName: "flFormFields",
     },

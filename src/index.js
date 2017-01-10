@@ -1,17 +1,9 @@
-// import baseTypes from './base-types';
-// import compositeTypes from './composite-types';
-// import customTypes from './custom-types';
+import baseTypes from "./base-types";
+import compositeTypes from "./composite-types";
+import customTypes from "./custom-types";
 
-
-const baseTypes = "";
-const compositeTypes = "";
-const customTypes = "";
-
-const all = Object.assign(
-  {},
+export default {
   baseTypes,
   customTypes,
   compositeTypes,
-);
-
-export default all;
+};

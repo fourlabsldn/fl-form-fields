@@ -32,7 +32,8 @@
 
     <script>
         // Our custom components array:
-        const customComponents = flFormFields;
+        console.log(flFormFields);
+        const customComponents = flFormFields.baseTypes;
         const container = document.querySelector('.form-builder-container');
 
         new FormBuilder(container, customComponents);

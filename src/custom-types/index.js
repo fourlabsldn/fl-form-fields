@@ -1,5 +1,5 @@
-import DateField from './Date';
+import DateField from "./DateField";
 
-export default {
+export default [
   DateField,
-};
+];
