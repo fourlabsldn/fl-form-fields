@@ -1,6 +1,6 @@
 import React from "react";
 import ifEnterPressed from "./ifEnterPressed";
-import { updateOption, removeIfOptionIsNull } from "./option-handling";
+import { updateOption, removeIfOptionIsNull } from "../actions";
 
 export const renderRadioOrCheckboxOptions = (state, update) => {
   if (state.configShowing) {
@@ -15,8 +15,10 @@ export const renderRadioOrCheckboxOptions = (state, update) => {
           type="text"
           className="fl-fb-Field-option-text fl-fb-Field-editable"
           value={option.caption}
-          onKeyPress={ifEnterPressed(removeIfOptionIsNull(state, update, optionIndex))}
-          onChange={updateOption(state, update, optionIndex)}
+          onKeyPress={ifEnterPressed(
+            e => update(removeIfOptionIsNull(optionIndex, e))
+          )}
+          onChange={e => update(updateOption(optionIndex, e))}
         />
       </div>
     ));
@@ -43,8 +45,10 @@ export const renderDropdownOptions = (state, update) => {
           className="fl-fb-Field-editable"
           type="text"
           value={option.caption}
-          onKeyPress={ifEnterPressed(removeIfOptionIsNull(state, update, optionIndex))}
-          onChange={updateOption(state, update, optionIndex)}
+          onKeyPress={ifEnterPressed(
+            e => update(removeIfOptionIsNull(optionIndex, e))
+          )}
+          onChange={e => update(updateOption(optionIndex, e))}
         />
       </div>
     ));

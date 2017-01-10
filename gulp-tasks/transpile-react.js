@@ -44,7 +44,7 @@ const DEFAULT_CONFIG = {
       exclude: 'node_modules/**',
       babelrc: false,
       presets: ['es2015-rollup', 'react', 'stage-2'],
-      plugins: ['lodash'],
+      plugins: ['lodash', 'ramda'],
     }),
     // TODO: Change this from 'development' to 'production' during production
     replace({ 'process.env.NODE_ENV': JSON.stringify('development') }),

@@ -6966,122 +6966,51 @@ var validate = (function (state) {
   }
 });
 
-// Creates a new object with properties of the old one
-// ovewritten by properties of the new object.
-// No new properties of the new Object are added.
-// overshadow Object -> Object -> Object
-function overshadow(oldObj, newObj) {
-  return Object.keys(oldObj).reduce(function (result, key) {
-    // We want to use values from newObj even if the value is set to undefined,
-    // but not use it if it is not set at all. That's why we use hasOwnProperty.
-    result[key] = newObj.hasOwnProperty(key) ? newObj[key] : oldObj[key]; // eslint-disable-line no-param-reassign, max-len
-    return result;
-  }, {});
-}
-
-var defineProperty$3 = function (obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-};
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-var updateProperty = curry$1(function (initialState, state, update, propName, event) {
-  var value = event.target.value;
-  var newValue = value || initialState()[propName];
-  var newState = overshadow(state, defineProperty$3({}, propName, newValue));
-  update(newState);
-});
-
-var convert$2 = convert_1;
-var func$1 = convert$2('get', get_1);
-
-func$1.placeholder = placeholder;
-var get$3 = func$1;
-
-// Remove the last option
-var removeOption = function removeOption(state, update) {
-  var options = state.options.slice(0, state.options.length - 1);
-  var newState = overshadow(state, { options: options });
-  update(newState);
-};
-
-// Add the option in the config input fields
-var addOption = function addOption(initialState, state, update) {
-  var newOption = {
-    caption: state.newOptionCaption.trim()
-  };
-
-  var optionIsEmpty = !newOption.caption;
-  var valueAlreadyExists = state.options.map(get$3("caption")).indexOf(newOption.caption) !== -1;
-
-  if (optionIsEmpty || valueAlreadyExists) {
-    return;
-  }
-
-  // Add option and remove default option
-  var defaultOptionCaption = initialState().options[0].caption;
-  var options = state.options.filter(function (o) {
-    return o.caption !== defaultOptionCaption;
-  }) // Remove default option
-  .concat([newOption]); // Add new option
-
-  var newState = overshadow(state, {
-    options: options,
-    newOptionCaption: ""
-  });
-  update(newState);
-};
-
-// Updated the caption text of an existing option
-var updateOption = curry$1(function (state, update, optionIndex, event) {
-  var caption = event.target.value;
-  var options = Array.from(state.options);
-  options[optionIndex] = overshadow(options[optionIndex], { caption: caption });
-
-  var newState = overshadow(state, { options: options });
-  update(newState);
-});
-
-var removeIfOptionIsNull = curry$1(function (state, update, optionIndex, event) {
-  var caption = event.target.value;
-  if (caption) {
-    return;
-  }
-  var optionsBefore = state.options.slice(0, optionIndex);
-  var optionsAfter = state.options.slice(optionIndex + 1, state.options.length);
-  var options = optionsBefore.concat(optionsAfter);
-  var newState = overshadow(state, { options: options });
-  update(newState);
-});
-
 var ifEnterPressed = curry$1(function (f, e) {
   if (event.key === "Enter") {
     f(e);
   }
 });
+
+// Possible state-changing actions
+
+var addOption = function addOption(initialState) {
+  return {
+    type: "addOption",
+    initialState: initialState
+  };
+};
+
+var removeOption = function removeOption() {
+  return {
+    type: "removeOption"
+  };
+};
+
+var removeIfOptionIsNull = function removeIfOptionIsNull(optionIndex, event) {
+  return {
+    type: "removeIfOptionIsNull",
+    optionIndex: optionIndex,
+    event: event
+  };
+};
+
+var updateOption = function updateOption(optionIndex, event) {
+  return {
+    type: "updateOption",
+    optionIndex: optionIndex,
+    event: event
+  };
+};
+
+var updateProperty = function updateProperty(initialState, propName, event) {
+  return {
+    type: "updateProperty",
+    initialState: initialState,
+    propName: propName,
+    event: event
+  };
+};
 
 var renderRadioOrCheckboxOptions = function renderRadioOrCheckboxOptions(state, update) {
   if (state.configShowing) {
@@ -7098,8 +7027,12 @@ var renderRadioOrCheckboxOptions = function renderRadioOrCheckboxOptions(state, 
           type: "text",
           className: "fl-fb-Field-option-text fl-fb-Field-editable",
           value: option.caption,
-          onKeyPress: ifEnterPressed(removeIfOptionIsNull(state, update, optionIndex)),
-          onChange: updateOption(state, update, optionIndex)
+          onKeyPress: ifEnterPressed(function (e) {
+            return update(removeIfOptionIsNull(optionIndex, e));
+          }),
+          onChange: function onChange(e) {
+            return update(updateOption(optionIndex, e));
+          }
         })
       );
     });
@@ -7135,8 +7068,12 @@ var renderDropdownOptions = function renderDropdownOptions(state, update) {
           className: "fl-fb-Field-editable",
           type: "text",
           value: option.caption,
-          onKeyPress: ifEnterPressed(removeIfOptionIsNull(state, update, optionIndex)),
-          onChange: updateOption(state, update, optionIndex)
+          onKeyPress: ifEnterPressed(function (e) {
+            return update(removeIfOptionIsNull(optionIndex, e));
+          }),
+          onChange: function onChange(e) {
+            return update(updateOption(optionIndex, e));
+          }
         })
       );
     });
@@ -7161,6 +7098,387 @@ var renderOptions = (function (state, update) {
   return state.type === "Dropdown" ? renderDropdownOptions(state, update) : renderRadioOrCheckboxOptions(state, update);
 });
 
+var _isPlaceholder$2 = function _isPlaceholder(a) {
+  return a != null &&
+         typeof a === 'object' &&
+         a['@@functional/placeholder'] === true;
+};
+
+var _isPlaceholder$1 = _isPlaceholder$2;
+
+
+/**
+ * Optimized internal one-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+var _curry1$1 = function _curry1(fn) {
+  return function f1(a) {
+    if (arguments.length === 0 || _isPlaceholder$1(a)) {
+      return f1;
+    } else {
+      return fn.apply(this, arguments);
+    }
+  };
+};
+
+var _curry1 = _curry1$1;
+var _isPlaceholder = _isPlaceholder$2;
+
+
+/**
+ * Optimized internal two-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+var _curry2$1 = function _curry2(fn) {
+  return function f2(a, b) {
+    switch (arguments.length) {
+      case 0:
+        return f2;
+      case 1:
+        return _isPlaceholder(a) ? f2
+             : _curry1(function(_b) { return fn(a, _b); });
+      default:
+        return _isPlaceholder(a) && _isPlaceholder(b) ? f2
+             : _isPlaceholder(a) ? _curry1(function(_a) { return fn(_a, b); })
+             : _isPlaceholder(b) ? _curry1(function(_b) { return fn(a, _b); })
+             : fn(a, b);
+    }
+  };
+};
+
+var _curry2 = _curry2$1;
+
+
+/**
+ * Returns a function that when supplied an object returns the indicated
+ * property of that object, if it exists.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Object
+ * @sig s -> {s: a} -> a | Undefined
+ * @param {String} p The property name
+ * @param {Object} obj The object to query
+ * @return {*} The value at `obj.p`.
+ * @see R.path
+ * @example
+ *
+ *      R.prop('x', {x: 100}); //=> 100
+ *      R.prop('x', {}); //=> undefined
+ */
+var prop = _curry2(function prop(p, obj) { return obj[p]; });
+
+// Add the option in the config input fields
+var addOption$1 = (function (state, _ref) {
+  var initialState = _ref.initialState;
+
+  var newOption = {
+    caption: state.newOptionCaption.trim()
+  };
+
+  var optionIsEmpty = !newOption.caption;
+  var valueAlreadyExists = state.options.map(prop("caption")).indexOf(newOption.caption) !== -1;
+
+  if (optionIsEmpty || valueAlreadyExists) {
+    return state;
+  }
+
+  // Add option and remove default option
+  var defaultOptionCaption = initialState().options[0].caption;
+  var options = state.options.filter(function (o) {
+    return o.caption !== defaultOptionCaption;
+  }) // Remove default option
+  .concat([newOption]); // Add new option
+
+  return Object.assign({}, state, {
+    options: options,
+    newOptionCaption: ""
+  });
+});
+
+// Remove the last option
+var removeOption$1 = (function (state) {
+  return Object.assign({}, state, {
+    options: state.options.slice(0, state.options.length - 1)
+  });
+});
+
+var _arity$1 = function _arity(n, fn) {
+  /* eslint-disable no-unused-vars */
+  switch (n) {
+    case 0: return function() { return fn.apply(this, arguments); };
+    case 1: return function(a0) { return fn.apply(this, arguments); };
+    case 2: return function(a0, a1) { return fn.apply(this, arguments); };
+    case 3: return function(a0, a1, a2) { return fn.apply(this, arguments); };
+    case 4: return function(a0, a1, a2, a3) { return fn.apply(this, arguments); };
+    case 5: return function(a0, a1, a2, a3, a4) { return fn.apply(this, arguments); };
+    case 6: return function(a0, a1, a2, a3, a4, a5) { return fn.apply(this, arguments); };
+    case 7: return function(a0, a1, a2, a3, a4, a5, a6) { return fn.apply(this, arguments); };
+    case 8: return function(a0, a1, a2, a3, a4, a5, a6, a7) { return fn.apply(this, arguments); };
+    case 9: return function(a0, a1, a2, a3, a4, a5, a6, a7, a8) { return fn.apply(this, arguments); };
+    case 10: return function(a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) { return fn.apply(this, arguments); };
+    default: throw new Error('First argument to _arity must be a non-negative integer no greater than ten');
+  }
+};
+
+var _arity$3 = _arity$1;
+var _isPlaceholder$4 = _isPlaceholder$2;
+
+
+/**
+ * Internal curryN function.
+ *
+ * @private
+ * @category Function
+ * @param {Number} length The arity of the curried function.
+ * @param {Array} received An array of arguments received thus far.
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+var _curryN$1 = function _curryN(length, received, fn) {
+  return function() {
+    var combined = [];
+    var argsIdx = 0;
+    var left = length;
+    var combinedIdx = 0;
+    while (combinedIdx < received.length || argsIdx < arguments.length) {
+      var result;
+      if (combinedIdx < received.length &&
+          (!_isPlaceholder$4(received[combinedIdx]) ||
+           argsIdx >= arguments.length)) {
+        result = received[combinedIdx];
+      } else {
+        result = arguments[argsIdx];
+        argsIdx += 1;
+      }
+      combined[combinedIdx] = result;
+      if (!_isPlaceholder$4(result)) {
+        left -= 1;
+      }
+      combinedIdx += 1;
+    }
+    return left <= 0 ? fn.apply(this, combined)
+                     : _arity$3(left, _curryN(length, combined, fn));
+  };
+};
+
+var _arity = _arity$1;
+var _curry1$4 = _curry1$1;
+var _curry2$3 = _curry2$1;
+var _curryN = _curryN$1;
+
+
+/**
+ * Returns a curried equivalent of the provided function, with the specified
+ * arity. The curried function has two unusual capabilities. First, its
+ * arguments needn't be provided one at a time. If `g` is `R.curryN(3, f)`, the
+ * following are equivalent:
+ *
+ *   - `g(1)(2)(3)`
+ *   - `g(1)(2, 3)`
+ *   - `g(1, 2)(3)`
+ *   - `g(1, 2, 3)`
+ *
+ * Secondly, the special placeholder value `R.__` may be used to specify
+ * "gaps", allowing partial application of any combination of arguments,
+ * regardless of their positions. If `g` is as above and `_` is `R.__`, the
+ * following are equivalent:
+ *
+ *   - `g(1, 2, 3)`
+ *   - `g(_, 2, 3)(1)`
+ *   - `g(_, _, 3)(1)(2)`
+ *   - `g(_, _, 3)(1, 2)`
+ *   - `g(_, 2)(1)(3)`
+ *   - `g(_, 2)(1, 3)`
+ *   - `g(_, 2)(_, 3)(1)`
+ *
+ * @func
+ * @memberOf R
+ * @since v0.5.0
+ * @category Function
+ * @sig Number -> (* -> a) -> (* -> a)
+ * @param {Number} length The arity for the returned function.
+ * @param {Function} fn The function to curry.
+ * @return {Function} A new, curried function.
+ * @see R.curry
+ * @example
+ *
+ *      var sumArgs = (...args) => R.sum(args);
+ *
+ *      var curriedAddFourNumbers = R.curryN(4, sumArgs);
+ *      var f = curriedAddFourNumbers(1, 2);
+ *      var g = f(3);
+ *      g(4); //=> 10
+ */
+var curryN$1 = _curry2$3(function curryN(length, fn) {
+  if (length === 1) {
+    return _curry1$4(fn);
+  }
+  return _arity(length, _curryN(length, [], fn));
+});
+
+var _curry1$3 = _curry1$1;
+var curryN = curryN$1;
+
+
+/**
+ * Returns a curried equivalent of the provided function. The curried function
+ * has two unusual capabilities. First, its arguments needn't be provided one
+ * at a time. If `f` is a ternary function and `g` is `R.curry(f)`, the
+ * following are equivalent:
+ *
+ *   - `g(1)(2)(3)`
+ *   - `g(1)(2, 3)`
+ *   - `g(1, 2)(3)`
+ *   - `g(1, 2, 3)`
+ *
+ * Secondly, the special placeholder value `R.__` may be used to specify
+ * "gaps", allowing partial application of any combination of arguments,
+ * regardless of their positions. If `g` is as above and `_` is `R.__`, the
+ * following are equivalent:
+ *
+ *   - `g(1, 2, 3)`
+ *   - `g(_, 2, 3)(1)`
+ *   - `g(_, _, 3)(1)(2)`
+ *   - `g(_, _, 3)(1, 2)`
+ *   - `g(_, 2)(1)(3)`
+ *   - `g(_, 2)(1, 3)`
+ *   - `g(_, 2)(_, 3)(1)`
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Function
+ * @sig (* -> a) -> (* -> a)
+ * @param {Function} fn The function to curry.
+ * @return {Function} A new, curried function.
+ * @see R.curryN
+ * @example
+ *
+ *      var addFourNumbers = (a, b, c, d) => a + b + c + d;
+ *
+ *      var curriedAddFourNumbers = R.curry(addFourNumbers);
+ *      var f = curriedAddFourNumbers(1, 2);
+ *      var g = f(3);
+ *      g(4); //=> 10
+ */
+var curry$3 = _curry1$3(function curry(fn) {
+  return curryN(fn.length, fn);
+});
+
+// Updated the caption text of an existing option
+var updateOption$1 = curry$3(function (state, _ref) {
+  var optionIndex = _ref.optionIndex,
+      event = _ref.event;
+
+  var caption = event.target.value;
+  var options = state.options.map(function (opt, idx) {
+    return idx === optionIndex ? { caption: caption } : opt;
+  });
+
+  return Object.assign({}, state, { options: options });
+});
+
+var removeIfOptionIsNull$1 = curry$3(function (state, _ref) {
+  var optionIndex = _ref.optionIndex,
+      event = _ref.event;
+
+  var caption = event.target.value;
+  if (caption) {
+    return state;
+  }
+  var optionsBefore = state.options.slice(0, optionIndex);
+  var optionsAfter = state.options.slice(optionIndex + 1, state.options.length);
+  var options = optionsBefore.concat(optionsAfter);
+
+  return Object.assign({}, state, { options: options });
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var defineProperty$3 = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var updateProperty$1 = curry$1(function (state, _ref) {
+  var initialState = _ref.initialState,
+      propName = _ref.propName,
+      event = _ref.event;
+
+  var value = event.target.value;
+  var newValue = value || initialState()[propName];
+
+  return Object.assign({}, state, defineProperty$3({}, propName, newValue));
+});
+
+var possibleActions = {
+  addOption: addOption$1,
+  removeOption: removeOption$1,
+  updateOption: updateOption$1,
+  removeIfOptionIsNull: removeIfOptionIsNull$1,
+  updateProperty: updateProperty$1
+};
+
+function update(state, action) {
+  return possibleActions[action.type](state);
+}
+
 /* eslint-disable new-cap */
 
 /**
@@ -7171,7 +7489,8 @@ var renderOptions = (function (state, update) {
  */
 var ConfigurationView = function ConfigurationView(initialState, _ref) {
   var state = _ref.state,
-      update = _ref.update;
+      update$$1 = _ref.update;
+
   return React.createElement(
     "div",
     null,
@@ -7181,23 +7500,25 @@ var ConfigurationView = function ConfigurationView(initialState, _ref) {
       React.createElement("input", {
         type: "text",
         className: "fl-fb-Field-editable",
-        onChange: updateProperty(initialState, state, update, "title"),
+        onChange: function onChange(e) {
+          return update$$1(updateProperty(initialState, "title", e));
+        },
         defaultValue: state.title
       })
     ),
-    renderOptions(state, update),
+    renderOptions(state, update$$1),
     React.createElement(
       "div",
       { className: "fl-fb-Field-config" },
       React.createElement("button", {
         onMouseDown: function onMouseDown() {
-          return removeOption(state, update);
+          return update$$1(removeOption());
         },
         className: "glyphicon-minus-sign glyphicon fl-fb-Field-config-btn"
       }),
       React.createElement("button", {
         onMouseDown: function onMouseDown() {
-          return addOption(initialState, state, update);
+          return update$$1(addOption(initialState));
         },
         className: "glyphicon-plus-sign glyphicon fl-fb-Field-config-btn"
       }),
@@ -7206,9 +7527,11 @@ var ConfigurationView = function ConfigurationView(initialState, _ref) {
         type: "text",
         value: state.newOptionCaption,
         placeholder: "Type a new option caption",
-        onChange: updateProperty(initialState, state, update, "newOptionCaption"),
+        onChange: function onChange(e) {
+          return update$$1(updateProperty(initialState, "newOptionCaption", e));
+        },
         onKeyPress: ifEnterPressed(function () {
-          return addOption(initialState, state, update);
+          return update$$1(addOption(initialState));
         })
       })
     )
@@ -7218,7 +7541,7 @@ var ConfigurationView = function ConfigurationView(initialState, _ref) {
 // Renders the element without the config being open
 var FormView = function FormView(_ref2) {
   var state = _ref2.state,
-      update = _ref2.update;
+      update$$1 = _ref2.update;
   return React.createElement(
     "div",
     null,
@@ -7227,26 +7550,30 @@ var FormView = function FormView(_ref2) {
       null,
       state.title
     ),
-    renderOptions(state, update)
+    renderOptions(state, update$$1)
   );
 };
 
 var View = curry$1(function (initialState, _ref3) {
   var state = _ref3.state,
-      update = _ref3.update;
+      update$$1 = _ref3.update;
 
   validate(state);
-  return state.configShowing ? ConfigurationView(initialState, { state: state, update: update }) : FormView({ state: state, update: update });
+  var newUpdate = function newUpdate(action) {
+    return update$$1(update(state, action));
+  };
+
+  return state.configShowing ? ConfigurationView(initialState, { state: state, update: newUpdate }) : FormView({ state: state, update: newUpdate });
 });
 
 var defaultConfig = {
-  // Compulsory fields
+  configShowing: false,
   required: false,
   type: "DefaultType",
   displayName: "Default Type",
   group: "Options Components",
 
-  // Field type specific
+  // Fields specific to option types
   title: "Add a title",
   options: [{
     caption: "Insert an option"
@@ -7311,6 +7638,19 @@ var Dropdown = {
   initialState: initialState$2,
   RenderEditor: View(initialState$2)
 };
+
+// Creates a new object with properties of the old one
+// ovewritten by properties of the new object.
+// No new properties of the new Object are added.
+// overshadow Object -> Object -> Object
+function overshadow(oldObj, newObj) {
+  return Object.keys(oldObj).reduce(function (result, key) {
+    // We want to use values from newObj even if the value is set to undefined,
+    // but not use it if it is not set at all. That's why we use hasOwnProperty.
+    result[key] = newObj.hasOwnProperty(key) ? newObj[key] : oldObj[key]; // eslint-disable-line no-param-reassign, max-len
+    return result;
+  }, {});
+}
 
 /**
  *
@@ -7473,6 +7813,12 @@ var TextBox$4 = buildTextFieldConstructor({
 var baseTypes = [RadioButtons, Checkboxes, Dropdown, TextBox, EmailBox, TextBox$4, TextBox$3, TextBox$2];
 
 var compositeTypes = [];
+
+var convert$2 = convert_1;
+var func$1 = convert$2('get', get_1);
+
+func$1.placeholder = placeholder;
+var get$3 = func$1;
 
 var LodashWrapper$3 = _LodashWrapper;
 var flatRest$2 = _flatRest;
@@ -7965,6 +8311,77 @@ var allTypes = {
 };
 
 /* eslint-env jasmine */
+
+function apiTest(field) {
+  describe(field.info.type, function () {
+    it("exposes the compulsory api", function () {
+      expect(_typeof(field.info)).toBe("object");
+      expect(_typeof(field.initialState)).toBe("function");
+      expect(_typeof(field.RenderEditor)).toBe("function");
+    });
+
+    it("complies with the info interface", function () {
+      expect(_typeof(field.info.type)).toBe("string");
+      expect(_typeof(field.info.group)).toBe("string");
+      expect(_typeof(field.info.displayName)).toBe("string");
+    });
+
+    it("initialState's function return contains type info", function () {
+      var init = field.initialState();
+      expect(_typeof(init.type)).toBe("string");
+      expect(_typeof(init.group)).toBe("string");
+      expect(_typeof(init.displayName)).toBe("string");
+    });
+
+    it("initialState's function return contains instance compulsory fields", function () {
+      var init = field.initialState();
+      expect(_typeof(init.required)).toBe("boolean");
+      expect(_typeof(init.configShowing)).toBe("boolean");
+    });
+  });
+}
+
+/* eslint-env jasmine */
+describe("option-type update.updateOption", function () {
+  var mockEvent = {
+    target: {
+      value: "eventValue"
+    }
+  };
+
+  var mockState = {
+    prop1: "prop1",
+    prop2: "prop2",
+    options: [{ caption: "default caption1" }, { caption: "default caption2" }, { caption: "default caption3" }]
+  };
+
+  it("is curried", function () {
+    var completeInvocation = update(mockState, 0, mockEvent);
+    var curriedInvocation = update(mockState)(0)(mockEvent);
+    expect(completeInvocation.prop1).toBe(curriedInvocation.prop1);
+    expect(completeInvocation.prop2).toBe(curriedInvocation.prop2);
+    expect(completeInvocation.options.length).toBe(curriedInvocation.options.length);
+  });
+
+  it("changes the option at the correct index", function () {
+    var newState = update(mockState, 0, mockEvent);
+    expect(newState.options[0]).toBe(mockEvent.target.value);
+  });
+
+  it("does not change other options", function () {
+    var newState = update(mockState, 0, mockEvent);
+    expect(newState.options[1]).toBe(mockState.options[1]);
+    expect(newState.options[2]).toBe(mockState.options[1]);
+  });
+
+  it("does not change other properties of state", function () {
+    var newState = update(mockState, 0, mockEvent);
+    expect(newState.prop1).toBe(mockState.prop1);
+    expect(newState.prop2).toBe(mockState.prop2);
+  });
+});
+
+/* eslint-env jasmine */
 describe("Smoke test", function () {
   it("exports the public API", function () {
     expect(Object.keys(allTypes).includes("baseTypes")).toBeTruthy();
@@ -7972,6 +8389,10 @@ describe("Smoke test", function () {
     expect(Object.keys(allTypes).includes("compositeTypes")).toBeTruthy();
   });
 });
+
+allTypes.baseTypes.map(apiTest);
+allTypes.customTypes.map(apiTest);
+allTypes.compositeTypes.map(apiTest);
 
 }(React,ReactDOM));
 //# sourceMappingURL=fl-form-fields-tests.js.map

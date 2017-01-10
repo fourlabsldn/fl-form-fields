@@ -1,11 +1,11 @@
 export default {
-  // Compulsory fields
+  configShowing: false,
   required: false,
   type: "DefaultType",
   displayName: "Default Type",
   group: "Options Components",
 
-  // Field type specific
+  // Fields specific to option types
   title: "Add a title",
   options: [
     {
