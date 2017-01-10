@@ -1,4 +1,5 @@
 /* eslint-env jasmine */
+import "babel-polyfill";
 import allTypes from "../src";
 import typeApiTest from "./type-api";
 import "./base-types";

@@ -22,7 +22,6 @@ describe("option-type update.updateOption", () => {
   it("changes the option at the correct index", () => {
     const action = updateOption(0, mockEvent);
     const newState = update(mockState, action);
-    console.log(newState);
     expect(newState.options[0].caption).toBe(mockEvent.target.value);
   });
 

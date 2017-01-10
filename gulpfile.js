@@ -8,7 +8,7 @@ const path = require("path");
 const organiser = require("gulp-organiser");
 organiser.registerAll("./gulp-tasks", {
   "test-headless": {
-    src: "./tests/unit/unit.js",
+    src: "./dist/fl-form-fields-tests.js",
   },
   "transpile-react": {
     main: {
@@ -28,8 +28,8 @@ organiser.registerAll("./gulp-tasks", {
       dest,
       rename: "fl-form-fields-tests.js",
       config: {
-        external: ["react", "react-dom"],
-        format: "iife",
+        // external: ["react", "react-dom"],
+        format: "umd",
       },
     },
   },
