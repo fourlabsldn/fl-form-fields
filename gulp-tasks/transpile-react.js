@@ -43,7 +43,7 @@ const DEFAULT_CONFIG = {
     babel({
       exclude: 'node_modules/**',
       babelrc: false,
-      presets: ['es2017', 'react'],
+      presets: ['es2015-rollup', 'react', 'stage-2'],
       plugins: ['lodash'],
     }),
     // TODO: Change this from 'development' to 'production' during production

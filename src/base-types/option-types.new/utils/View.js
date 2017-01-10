@@ -6,6 +6,7 @@ import updateProperty from "./updateProperty";
 import { removeOption, addOption } from "./option-handling";
 import { curry } from "lodash/fp";
 import ifEnterPressed from "./ifEnterPressed";
+import renderOptions from "./View.renderOptions";
 
 /**
  * When configuration is open, this is what is going to be displayed
@@ -13,7 +14,7 @@ import ifEnterPressed from "./ifEnterPressed";
  * @param  {Object} state : State
  * @param  {Function} update : State -> void // Will trigger a re-render
  */
-const ConfigurationView = (initialState, renderOptions, { state, update }) =>
+const ConfigurationView = (initialState, { state, update }) =>
 (
   <div>
     <h2>
@@ -49,7 +50,7 @@ const ConfigurationView = (initialState, renderOptions, { state, update }) =>
 );
 
 // Renders the element without the config being open
-const FormView = (renderOptions, { state, update }) =>
+const FormView = ({ state, update }) =>
 (
   <div>
     <h2>{state.title}</h2>
@@ -57,11 +58,11 @@ const FormView = (renderOptions, { state, update }) =>
   </div>
 );
 
-const View = curry((initialState, renderOptions, { state, update }) => {
+const View = curry((initialState, { state, update }) => {
   validate(state);
   return state.configShowing
-    ? ConfigurationView(initialState, renderOptions, { state, update })
-    : FormView(renderOptions, { state, update });
+    ? ConfigurationView(initialState, { state, update })
+    : FormView({ state, update });
 });
 
 export default View;

@@ -1001,11 +1001,11 @@ var _root = root$2;
 var root$1 = _root;
 
 /** Built-in value references. */
-var Symbol$1 = root$1.Symbol;
+var Symbol$2 = root$1.Symbol;
 
-var _Symbol = Symbol$1;
+var _Symbol = Symbol$2;
 
-var Symbol$2 = _Symbol;
+var Symbol$3 = _Symbol;
 
 /** Used for built-in method references. */
 var objectProto$1 = Object.prototype;
@@ -1021,7 +1021,7 @@ var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
 var nativeObjectToString = objectProto$1.toString;
 
 /** Built-in value references. */
-var symToStringTag$1 = Symbol$2 ? Symbol$2.toStringTag : undefined;
+var symToStringTag$1 = Symbol$3 ? Symbol$3.toStringTag : undefined;
 
 /**
  * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
@@ -1075,7 +1075,7 @@ function objectToString$1(value) {
 
 var _objectToString = objectToString$1;
 
-var Symbol = _Symbol;
+var Symbol$1 = _Symbol;
 var getRawTag = _getRawTag;
 var objectToString = _objectToString;
 
@@ -1084,7 +1084,7 @@ var nullTag = '[object Null]';
 var undefinedTag = '[object Undefined]';
 
 /** Built-in value references. */
-var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+var symToStringTag = Symbol$1 ? Symbol$1.toStringTag : undefined;
 
 /**
  * The base implementation of `getTag` without fallbacks for buggy environments.
@@ -4747,9 +4747,9 @@ var getNative$6 = _getNative;
 var root$10 = _root;
 
 /* Built-in method references that are verified to be native. */
-var Promise$1 = getNative$6(root$10, 'Promise');
+var Promise$2 = getNative$6(root$10, 'Promise');
 
-var _Promise = Promise$1;
+var _Promise = Promise$2;
 
 var getNative$7 = _getNative;
 var root$11 = _root;
@@ -4761,7 +4761,7 @@ var _Set = Set$1;
 
 var DataView = _DataView;
 var Map$3 = _Map;
-var Promise = _Promise;
+var Promise$1 = _Promise;
 var Set = _Set;
 var WeakMap$2 = _WeakMap;
 var baseGetTag$5 = _baseGetTag;
@@ -4779,7 +4779,7 @@ var dataViewTag$2 = '[object DataView]';
 /** Used to detect maps, sets, and weakmaps. */
 var dataViewCtorString = toSource$2(DataView);
 var mapCtorString = toSource$2(Map$3);
-var promiseCtorString = toSource$2(Promise);
+var promiseCtorString = toSource$2(Promise$1);
 var setCtorString = toSource$2(Set);
 var weakMapCtorString = toSource$2(WeakMap$2);
 
@@ -4795,7 +4795,7 @@ var getTag$1 = baseGetTag$5;
 // Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
 if ((DataView && getTag$1(new DataView(new ArrayBuffer(1))) != dataViewTag$2) ||
     (Map$3 && getTag$1(new Map$3) != mapTag$2) ||
-    (Promise && getTag$1(Promise.resolve()) != promiseTag) ||
+    (Promise$1 && getTag$1(Promise$1.resolve()) != promiseTag) ||
     (Set && getTag$1(new Set) != setTag$2) ||
     (WeakMap$2 && getTag$1(new WeakMap$2) != weakMapTag$2)) {
   getTag$1 = function(value) {
@@ -5047,10 +5047,10 @@ function cloneSet$1(set, isDeep, cloneFunc) {
 
 var _cloneSet = cloneSet$1;
 
-var Symbol$3 = _Symbol;
+var Symbol$4 = _Symbol;
 
 /** Used to convert symbols to primitives and strings. */
-var symbolProto = Symbol$3 ? Symbol$3.prototype : undefined;
+var symbolProto = Symbol$4 ? Symbol$4.prototype : undefined;
 var symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
 
 /**
@@ -5617,7 +5617,7 @@ function equalArrays$1(array, other, bitmask, customizer, equalFunc, stack) {
 
 var _equalArrays = equalArrays$1;
 
-var Symbol$4 = _Symbol;
+var Symbol$5 = _Symbol;
 var Uint8Array$2 = _Uint8Array;
 var eq$3 = eq_1;
 var equalArrays$2 = _equalArrays;
@@ -5643,7 +5643,7 @@ var arrayBufferTag$3 = '[object ArrayBuffer]';
 var dataViewTag$4 = '[object DataView]';
 
 /** Used to convert symbols to primitives and strings. */
-var symbolProto$1 = Symbol$4 ? Symbol$4.prototype : undefined;
+var symbolProto$1 = Symbol$5 ? Symbol$5.prototype : undefined;
 var symbolValueOf$1 = symbolProto$1 ? symbolProto$1.valueOf : undefined;
 
 /**
@@ -6263,7 +6263,7 @@ function arrayMap$1(array, iteratee) {
 
 var _arrayMap = arrayMap$1;
 
-var Symbol$5 = _Symbol;
+var Symbol$6 = _Symbol;
 var arrayMap = _arrayMap;
 var isArray$9 = isArray_1;
 var isSymbol$3 = isSymbol_1;
@@ -6272,7 +6272,7 @@ var isSymbol$3 = isSymbol_1;
 var INFINITY$1 = 1 / 0;
 
 /** Used to convert symbols to primitives and strings. */
-var symbolProto$2 = Symbol$5 ? Symbol$5.prototype : undefined;
+var symbolProto$2 = Symbol$6 ? Symbol$6.prototype : undefined;
 var symbolToString = symbolProto$2 ? symbolProto$2.toString : undefined;
 
 /**
@@ -6707,12 +6707,12 @@ function iteratee(func) {
 
 var iteratee_1 = iteratee;
 
-var Symbol$6 = _Symbol;
+var Symbol$7 = _Symbol;
 var isArguments$3 = isArguments_1;
 var isArray$11 = isArray_1;
 
 /** Built-in value references. */
-var spreadableSymbol = Symbol$6 ? Symbol$6.isConcatSpreadable : undefined;
+var spreadableSymbol = Symbol$7 ? Symbol$7.isConcatSpreadable : undefined;
 
 /**
  * Checks if `value` is a flattenable `arguments` object or array.
@@ -6952,18 +6952,26 @@ var func = convert('curry', curry_1$1);
 func.placeholder = placeholder;
 var curry$1 = func;
 
-var convert$2 = convert_1;
-var func$1 = convert$2('get', get_1);
+var validate = (function (state) {
+  if (!Array.isArray(state.options)) {
+    throw new Error("Invalid 'options' property. Not an array.");
+  }
 
-func$1.placeholder = placeholder;
-var get$2 = func$1;
+  var allOptionsHaveCaption = state.options.reduce(function (result, option) {
+    return result && option.caption !== undefined;
+  }, true);
+
+  if (!allOptionsHaveCaption) {
+    throw new Error("Invalid option in options array.");
+  }
+});
 
 // Creates a new object with properties of the old one
 // ovewritten by properties of the new object.
 // No new properties of the new Object are added.
 // overshadow Object -> Object -> Object
 function overshadow(oldObj, newObj) {
-  return Object.keys(oldObj).reduce((result, key) => {
+  return Object.keys(oldObj).reduce(function (result, key) {
     // We want to use values from newObj even if the value is set to undefined,
     // but not use it if it is not set at all. That's why we use hasOwnProperty.
     result[key] = newObj.hasOwnProperty(key) ? newObj[key] : oldObj[key]; // eslint-disable-line no-param-reassign, max-len
@@ -6971,152 +6979,189 @@ function overshadow(oldObj, newObj) {
   }, {});
 }
 
-const ifEnterPressed = curry$1((f, e) => {
-  if (event.key === 'Enter') {
-    f(e);
+var defineProperty$3 = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
   }
-});
 
-const validate = state => {
-  if (!Array.isArray(state.options)) {
-    throw new Error('Invalid "options" property. Not an array.');
-  }
-
-  const allOptionsHaveCaption = state.options.reduce((result, option) => {
-    return result && option.caption !== undefined;
-  }, true);
-
-  if (!allOptionsHaveCaption) {
-    throw new Error('Invalid option in options array.');
-  }
+  return obj;
 };
 
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var updateProperty = curry$1(function (initialState, state, update, propName, event) {
+  var value = event.target.value;
+  var newValue = value || initialState()[propName];
+  var newState = overshadow(state, defineProperty$3({}, propName, newValue));
+  update(newState);
+});
+
+var convert$2 = convert_1;
+var func$1 = convert$2('get', get_1);
+
+func$1.placeholder = placeholder;
+var get$3 = func$1;
+
 // Remove the last option
-const removeOption = (state, update) => {
-  const options = state.options.slice(0, state.options.length - 1);
-  const newState = overshadow(state, { options });
+var removeOption = function removeOption(state, update) {
+  var options = state.options.slice(0, state.options.length - 1);
+  var newState = overshadow(state, { options: options });
   update(newState);
 };
 
 // Add the option in the config input fields
-const addOption = (initialState, state, update) => {
-  const newOption = {
+var addOption = function addOption(initialState, state, update) {
+  var newOption = {
     caption: state.newOptionCaption.trim()
   };
 
-  const optionIsEmpty = !newOption.caption;
-  const valueAlreadyExists = state.options.map(get$2('caption')).indexOf(newOption.caption) !== -1;
+  var optionIsEmpty = !newOption.caption;
+  var valueAlreadyExists = state.options.map(get$3("caption")).indexOf(newOption.caption) !== -1;
 
   if (optionIsEmpty || valueAlreadyExists) {
     return;
   }
 
   // Add option and remove default option
-  const defaultOptionCaption = initialState().options[0].caption;
-  const options = state.options.filter(o => o.caption !== defaultOptionCaption) // Remove default option
+  var defaultOptionCaption = initialState().options[0].caption;
+  var options = state.options.filter(function (o) {
+    return o.caption !== defaultOptionCaption;
+  }) // Remove default option
   .concat([newOption]); // Add new option
 
-  const newState = overshadow(state, {
-    options,
-    newOptionCaption: ''
+  var newState = overshadow(state, {
+    options: options,
+    newOptionCaption: ""
   });
   update(newState);
 };
 
 // Updated the caption text of an existing option
-const updateOption = curry$1((state, update, optionIndex, event) => {
-  const caption = event.target.value;
-  const options = Array.from(state.options);
-  options[optionIndex] = overshadow(options[optionIndex], { caption });
+var updateOption = curry$1(function (state, update, optionIndex, event) {
+  var caption = event.target.value;
+  var options = Array.from(state.options);
+  options[optionIndex] = overshadow(options[optionIndex], { caption: caption });
 
-  const newState = overshadow(state, { options });
+  var newState = overshadow(state, { options: options });
   update(newState);
 });
 
-const removeIfOptionIsNull = curry$1((state, update, optionIndex, event) => {
-  const caption = event.target.value;
+var removeIfOptionIsNull = curry$1(function (state, update, optionIndex, event) {
+  var caption = event.target.value;
   if (caption) {
     return;
   }
-  const optionsBefore = state.options.slice(0, optionIndex);
-  const optionsAfter = state.options.slice(optionIndex + 1, state.options.length);
-  const options = optionsBefore.concat(optionsAfter);
-  const newState = overshadow(state, { options });
+  var optionsBefore = state.options.slice(0, optionIndex);
+  var optionsAfter = state.options.slice(optionIndex + 1, state.options.length);
+  var options = optionsBefore.concat(optionsAfter);
+  var newState = overshadow(state, { options: options });
   update(newState);
 });
 
-const updateProperty = curry$1((initialState, state, update, propName, event) => {
-  const value = event.target.value;
-  const newValue = value || initialState()[propName];
-  const newState = overshadow(state, { [propName]: newValue });
-  update(newState);
+var ifEnterPressed = curry$1(function (f, e) {
+  if (event.key === "Enter") {
+    f(e);
+  }
 });
 
-const renderRadioOrCheckboxOptions = (state, update) => {
+var renderRadioOrCheckboxOptions = function renderRadioOrCheckboxOptions(state, update) {
   if (state.configShowing) {
-    return state.options.map((option, optionIndex) => React.createElement(
-      'div',
-      { className: 'fl-fb-Field-option' },
-      React.createElement('input', {
+    return state.options.map(function (option, optionIndex) {
+      return React.createElement(
+        "div",
+        { className: "fl-fb-Field-option" },
+        React.createElement("input", {
+          type: state.htmlInputType,
+          value: option.caption,
+          name: state.title
+        }),
+        React.createElement("input", {
+          type: "text",
+          className: "fl-fb-Field-option-text fl-fb-Field-editable",
+          value: option.caption,
+          onKeyPress: ifEnterPressed(removeIfOptionIsNull(state, update, optionIndex)),
+          onChange: updateOption(state, update, optionIndex)
+        })
+      );
+    });
+  }
+
+  return state.options.map(function (option) {
+    return React.createElement(
+      "div",
+      { className: "fl-fb-Field-option" },
+      React.createElement("input", {
         type: state.htmlInputType,
         value: option.caption,
         name: state.title
       }),
-      React.createElement('input', {
-        type: 'text',
-        className: 'fl-fb-Field-option-text fl-fb-Field-editable',
-        value: option.caption,
-        onKeyPress: ifEnterPressed(removeIfOptionIsNull(state, update, optionIndex)),
-        onChange: updateOption(state, update, optionIndex)
-      })
-    ));
-  }
-
-  return state.options.map(option => React.createElement(
-    'div',
-    { className: 'fl-fb-Field-option' },
-    React.createElement('input', {
-      type: state.htmlInputType,
-      value: option.caption,
-      name: state.title
-    }),
-    React.createElement(
-      'span',
-      { className: 'fl-fb-Field-option-text' },
-      ' ',
-      option.caption,
-      ' '
-    )
-  ));
+      React.createElement(
+        "span",
+        { className: "fl-fb-Field-option-text" },
+        " ",
+        option.caption,
+        " "
+      )
+    );
+  });
 };
 
-const renderDropdownOptions = (state, update) => {
+var renderDropdownOptions = function renderDropdownOptions(state, update) {
   if (state.configShowing) {
-    return state.options.map((option, optionIndex) => React.createElement(
-      'div',
-      { className: 'fl-fb-Field-option' },
-      React.createElement('input', {
-        className: 'fl-fb-Field-editable',
-        type: 'text',
-        value: option.caption,
-        onKeyPress: ifEnterPressed(removeIfOptionIsNull(state, update, optionIndex)),
-        onChange: updateOption(state, update, optionIndex)
-      })
-    ));
+    return state.options.map(function (option, optionIndex) {
+      return React.createElement(
+        "div",
+        { className: "fl-fb-Field-option" },
+        React.createElement("input", {
+          className: "fl-fb-Field-editable",
+          type: "text",
+          value: option.caption,
+          onKeyPress: ifEnterPressed(removeIfOptionIsNull(state, update, optionIndex)),
+          onChange: updateOption(state, update, optionIndex)
+        })
+      );
+    });
   }
 
   return React.createElement(
-    'select',
-    { className: 'form-control' },
-    state.options.map(option => React.createElement(
-      'option',
-      { value: option.caption },
-      ' ',
-      option.caption,
-      ' '
-    ))
+    "select",
+    { className: "form-control" },
+    state.options.map(function (option) {
+      return React.createElement(
+        "option",
+        { value: option.caption },
+        " ",
+        option.caption,
+        " "
+      );
+    })
   );
 };
+
+var renderOptions = (function (state, update) {
+  return state.type === "Dropdown" ? renderDropdownOptions(state, update) : renderRadioOrCheckboxOptions(state, update);
+});
+
+/* eslint-disable new-cap */
 
 /**
  * When configuration is open, this is what is going to be displayed
@@ -7124,55 +7169,61 @@ const renderDropdownOptions = (state, update) => {
  * @param  {Object} state : State
  * @param  {Function} update : State -> void // Will trigger a re-render
  */
-const RenderConfigMode = curry$1((initialState, renderOptions, { state, update }) => {
-  validate(state);
-
+var ConfigurationView = function ConfigurationView(initialState, _ref) {
+  var state = _ref.state,
+      update = _ref.update;
   return React.createElement(
-    'div',
+    "div",
     null,
     React.createElement(
-      'h2',
+      "h2",
       null,
-      React.createElement('input', {
-        type: 'text',
-        className: 'fl-fb-Field-editable',
-        onChange: updateProperty(initialState, state, update, 'title'),
+      React.createElement("input", {
+        type: "text",
+        className: "fl-fb-Field-editable",
+        onChange: updateProperty(initialState, state, update, "title"),
         defaultValue: state.title
       })
     ),
     renderOptions(state, update),
     React.createElement(
-      'div',
-      { className: 'fl-fb-Field-config' },
-      React.createElement('button', {
-        onMouseDown: () => removeOption(state, update),
-        className: 'glyphicon-minus-sign glyphicon fl-fb-Field-config-btn'
+      "div",
+      { className: "fl-fb-Field-config" },
+      React.createElement("button", {
+        onMouseDown: function onMouseDown() {
+          return removeOption(state, update);
+        },
+        className: "glyphicon-minus-sign glyphicon fl-fb-Field-config-btn"
       }),
-      React.createElement('button', {
-        onMouseDown: () => addOption(initialState, state, update),
-        className: 'glyphicon-plus-sign glyphicon fl-fb-Field-config-btn'
+      React.createElement("button", {
+        onMouseDown: function onMouseDown() {
+          return addOption(initialState, state, update);
+        },
+        className: "glyphicon-plus-sign glyphicon fl-fb-Field-config-btn"
       }),
-      React.createElement('input', {
-        className: 'fl-fb-Field-config-captionInput',
-        type: 'text',
+      React.createElement("input", {
+        className: "fl-fb-Field-config-captionInput",
+        type: "text",
         value: state.newOptionCaption,
-        placeholder: 'Type a new option caption',
-        onChange: updateProperty(initialState, state, update, 'newOptionCaption'),
-        onKeyPress: ifEnterPressed(() => addOption(initialState, state, update))
+        placeholder: "Type a new option caption",
+        onChange: updateProperty(initialState, state, update, "newOptionCaption"),
+        onKeyPress: ifEnterPressed(function () {
+          return addOption(initialState, state, update);
+        })
       })
     )
   );
-});
+};
 
 // Renders the element without the config being open
-const RenderFormMode = (renderOptions, { state, update }) => {
-  validate(state);
-
+var FormView = function FormView(_ref2) {
+  var state = _ref2.state,
+      update = _ref2.update;
   return React.createElement(
-    'div',
+    "div",
     null,
     React.createElement(
-      'h2',
+      "h2",
       null,
       state.title
     ),
@@ -7180,70 +7231,86 @@ const RenderFormMode = (renderOptions, { state, update }) => {
   );
 };
 
-function buildOptionsFieldConstructor(typeInfo, renderOptions) {
+var View = curry$1(function (initialState, _ref3) {
+  var state = _ref3.state,
+      update = _ref3.update;
 
-  // These are the fields that will end up being
-  // changed on updates
-  const componentFields = {
-    // Compulsory fields
-    required: false,
-    // Component specific fields
-    title: 'Add a title',
-    options: [{ caption: 'Insert an option' }],
+  validate(state);
+  return state.configShowing ? ConfigurationView(initialState, { state: state, update: update }) : FormView({ state: state, update: update });
+});
 
-    // states needed to handle UI
-    newOptionCaption: ''
-  };
-
-  // For Text Fields the initialState function will only return an object.
-  const initialState = () => Object.assign({}, typeInfo, componentFields);
-
-  const RenderEditor = ({ state, update }) => {
-    return state.configShowing ? RenderConfigMode(initialState, renderOptions, { state, update }) // eslint-disable-line new-cap
-    : RenderFormMode(renderOptions, { state, update }); // eslint-disable-line new-cap
-  };
-
-  const OptionsField = {
-    info: typeInfo,
-    initialState,
-    RenderEditor
-  };
-
-  return OptionsField;
-}
-
-const typeInfo = {
-  // Compulsory
-  type: 'RadioButtons',
-  displayName: 'Radio Button',
-  group: 'Options Components',
+var defaultConfig = {
+  // Compulsory fields
+  required: false,
+  type: "DefaultType",
+  displayName: "Default Type",
+  group: "Options Components",
 
   // Field type specific
-  htmlInputType: 'radio'
+  title: "Add a title",
+  options: [{
+    caption: "Insert an option"
+  }],
+  // states needed to handle UI
+  newOptionCaption: ""
 };
 
-const RadioButtons = buildOptionsFieldConstructor(typeInfo, renderRadioOrCheckboxOptions);
-
-const typeInfo$1 = {
-  // Compulsory
-  type: 'Checkboxes',
-  displayName: 'Checkboxes',
-  group: 'Options Components',
-
-  // Field type specific
-  htmlInputType: 'checkbox'
+/* eslint-disable new-cap */
+var info = {
+  type: "RadioButtons",
+  displayName: "Radio Button",
+  group: "Options Components"
 };
 
-const RadioButtons$2 = buildOptionsFieldConstructor(typeInfo$1, renderRadioOrCheckboxOptions);
-
-const typeInfo$2 = {
-  // Compulsory
-  type: 'Dropdown',
-  displayName: 'Dropdown',
-  group: 'Options Components'
+var initialState = function initialState() {
+  return _extends({}, defaultConfig, info, {
+    htmlInputType: "radio"
+  });
 };
 
-const Dropdown = buildOptionsFieldConstructor(typeInfo$2, renderDropdownOptions);
+var RadioButtons = {
+  info: info,
+  initialState: initialState,
+  RenderEditor: View(initialState)
+};
+
+/* eslint-disable new-cap */
+var info$1 = {
+  type: "Checkboxes",
+  displayName: "Checkboxes",
+  group: "Options Components"
+};
+
+var initialState$1 = function initialState() {
+  return _extends({}, defaultConfig, info$1, {
+    htmlInputType: "checkbox"
+  });
+};
+
+var Checkboxes = {
+  info: info$1,
+  initialState: initialState$1,
+  RenderEditor: View(initialState$1)
+};
+
+/* eslint-disable new-cap */
+var info$2 = {
+  type: "Checkboxes",
+  displayName: "Checkboxes",
+  group: "Options Components"
+};
+
+var initialState$2 = function initialState() {
+  return _extends({}, defaultConfig, info$2, {
+    htmlInputType: "checkbox"
+  });
+};
+
+var Dropdown = {
+  info: info$2,
+  initialState: initialState$2,
+  RenderEditor: View(initialState$2)
+};
 
 /**
  *
@@ -7256,17 +7323,17 @@ const Dropdown = buildOptionsFieldConstructor(typeInfo$2, renderDropdownOptions)
 
 // ========== UTILS =================== //
 
-const updateField = curry_1$1((update, state, initialState, fieldName, event) => {
-  const value = event.target.value;
+var updateField = curry_1$1(function (update, state, initialState, fieldName, event) {
+  var value = event.target.value;
   // Update or fallback to default value
-  const newValue = value || initialState[fieldName];
-  const newState = overshadow(state, { [fieldName]: newValue });
+  var newValue = value || initialState[fieldName];
+  var newState = overshadow(state, defineProperty$3({}, fieldName, newValue));
   update(newState);
 });
 
 // ========== END OF UTILS ============ //
 
-const templateTypeInfo = {
+var templateTypeInfo = {
   // Compulsory
   type: 'TextField',
   group: 'Text Components',
@@ -7279,7 +7346,7 @@ const templateTypeInfo = {
 
 // These are the fields that will end up being
 // changed on updates
-const componentFields = {
+var componentFields = {
   // Compulsory fields
   required: false,
   // Component specific fields
@@ -7288,8 +7355,10 @@ const componentFields = {
 };
 
 // For Text Fields the initialState function will only return an object.
-const createInitialState = (typeSpecific, componentSpecific) => {
-  return () => Object.assign({}, typeSpecific, componentSpecific);
+var createInitialState = function createInitialState(typeSpecific, componentSpecific) {
+  return function () {
+    return Object.assign({}, typeSpecific, componentSpecific);
+  };
 };
 
 // When configuration is open, this is what is going to be displayed
@@ -7298,7 +7367,10 @@ const createInitialState = (typeSpecific, componentSpecific) => {
  * @param  {Object} state : State
  * @param  {Function} update : State -> void // Will trigger a re-render
  */
-const createRenderConfigMode = curry_1$1((initialState, { state, update }) => {
+var createRenderConfigMode = curry_1$1(function (initialState, _ref) {
+  var state = _ref.state,
+      update = _ref.update;
+
   return React.createElement(
     'div',
     null,
@@ -7321,7 +7393,9 @@ const createRenderConfigMode = curry_1$1((initialState, { state, update }) => {
   );
 });
 
-const RenderFormMode$1 = ({ state }) => {
+var RenderFormMode = function RenderFormMode(_ref2) {
+  var state = _ref2.state;
+
   return React.createElement(
     'div',
     null,
@@ -7342,58 +7416,61 @@ const RenderFormMode$1 = ({ state }) => {
 };
 
 function buildTextFieldConstructor(customTypeInfo) {
-  const typeInfo = overshadow(templateTypeInfo, customTypeInfo);
+  var typeInfo = overshadow(templateTypeInfo, customTypeInfo);
 
-  const initialState = createInitialState(typeInfo, componentFields);
+  var initialState = createInitialState(typeInfo, componentFields);
 
-  const RenderConfigMode = createRenderConfigMode(initialState());
+  var RenderConfigMode = createRenderConfigMode(initialState());
 
-  const RenderEditor = ({ state, update }) => {
-    return state.configShowing ? RenderConfigMode({ state, update }) // eslint-disable-line new-cap
-    : RenderFormMode$1({ state, update }); // eslint-disable-line new-cap
+  var RenderEditor = function RenderEditor(_ref3) {
+    var state = _ref3.state,
+        update = _ref3.update;
+
+    return state.configShowing ? RenderConfigMode({ state: state, update: update }) // eslint-disable-line new-cap
+    : RenderFormMode({ state: state, update: update }); // eslint-disable-line new-cap
   };
 
-  const FieldConstructor = {
+  var FieldConstructor = {
     info: typeInfo,
-    initialState,
-    RenderEditor
+    initialState: initialState,
+    RenderEditor: RenderEditor
   };
 
   return FieldConstructor;
 }
 
-const TextBox = buildTextFieldConstructor({
+var TextBox = buildTextFieldConstructor({
   type: 'TextBox',
   displayName: 'Text Box',
   htmlInputType: 'text'
 });
 
-const TextBox$2 = buildTextFieldConstructor({
+var TextBox$2 = buildTextFieldConstructor({
   type: 'TextArea',
   displayName: 'Text Area',
   htmlElement: 'textarea'
 });
 
-const EmailBox = buildTextFieldConstructor({
+var EmailBox = buildTextFieldConstructor({
   type: 'EmailBox',
   displayName: 'Email Box',
   htmlInputType: 'email'
 });
 
-const TextBox$3 = buildTextFieldConstructor({
+var TextBox$3 = buildTextFieldConstructor({
   type: 'NumberBox',
   displayName: 'Number Box',
   htmlInputType: 'number'
 });
 
-const TextBox$4 = buildTextFieldConstructor({
+var TextBox$4 = buildTextFieldConstructor({
   type: 'TelephoneBox',
   displayName: 'Telephone Box',
   htmlInputType: 'tel'
 });
 
 // Field Types
-var baseTypes = [RadioButtons, RadioButtons$2, Dropdown, TextBox, EmailBox, TextBox$4, TextBox$3, TextBox$2];
+var baseTypes = [RadioButtons, Checkboxes, Dropdown, TextBox, EmailBox, TextBox$4, TextBox$3, TextBox$2];
 
 var compositeTypes = [];
 
@@ -7582,35 +7659,37 @@ assert.warn = function warn(condition, errorMessage) {
   }
 };
 
-const minDateDefault = -2208988800000;
-const maxDateDefault = 4102444800000;
+var minDateDefault = -2208988800000;
+var maxDateDefault = 4102444800000;
 
 // Returns a number. If num is NaN, returns min
 // between : Number -> Number -> Number
-const between = curry$1((min, max, num) => {
-  const constrained = Math.max(min, Math.min(num, max));
+var between = curry$1(function (min, max, num) {
+  var constrained = Math.max(min, Math.min(num, max));
   return isNaN(constrained) ? min : constrained;
 });
 
 // toDigits : Number -> Number -> String
-const toDigits = curry$1((digitCount, num) => {
-  const charCount = num.toString().length;
-  const zeroesCount = Math.max(0, digitCount - charCount); // make sure never negative
+var toDigits = curry$1(function (digitCount, num) {
+  var charCount = num.toString().length;
+  var zeroesCount = Math.max(0, digitCount - charCount); // make sure never negative
   return Array(zeroesCount).fill(0).join('') + num.toString();
 });
 
 // validate : Number -> Number -> String -> String
-const validateAndPrettify = curry$1((min, max, stringValue) => {
-  const maxChars = max.toString().length;
-  return stringValue.length === 0 ? stringValue : flow(s => parseInt(s, 10), between(min, max), toDigits(maxChars))(stringValue);
+var validateAndPrettify = curry$1(function (min, max, stringValue) {
+  var maxChars = max.toString().length;
+  return stringValue.length === 0 ? stringValue : flow(function (s) {
+    return parseInt(s, 10);
+  }, between(min, max), toDigits(maxChars))(stringValue);
 });
 
 // updateDate : Number -> Number -> String -> String
-const validate$1 = curry$1((min, max, stringValue) => {
-  const maxChars = max.toString().length;
-  const value = stringValue.replace(/[^0-9]/g, '').slice(-maxChars);
+var validate$1 = curry$1(function (min, max, stringValue) {
+  var maxChars = max.toString().length;
+  var value = stringValue.replace(/[^0-9]/g, '').slice(-maxChars);
 
-  const isFieldFilled = value.length >= maxChars;
+  var isFieldFilled = value.length >= maxChars;
   // If it doesn't even have enough characters, it's below max and the
   // person might not have finished typing yet, so let's only really validate and
   // prettify if maxChars is reached
@@ -7618,12 +7697,12 @@ const validate$1 = curry$1((min, max, stringValue) => {
 });
 
 // focusNextWhenFilled : Number -> Event -> Nothing
-const focusNextIfFilled = curry$1((max, e) => {
-  const maxChars = max.toString().length;
-  const isFieldFilled = e.target.value.toString().length >= maxChars;
+var focusNextIfFilled = curry$1(function (max, e) {
+  var maxChars = max.toString().length;
+  var isFieldFilled = e.target.value.toString().length >= maxChars;
 
   if (isFieldFilled) {
-    const nextField = ReactDOM.findDOMNode(e.target).nextElementSibling;
+    var nextField = ReactDOM.findDOMNode(e.target).nextElementSibling;
     if (nextField && nextField.nodeName === 'INPUT') {
       nextField.focus();
     }
@@ -7631,31 +7710,31 @@ const focusNextIfFilled = curry$1((max, e) => {
 });
 
 // focusPreviousIfEmpty : Event -> Nothing
-const focusPreviousIfEmpty = e => {
-  const backspaceKeyCode = 8;
-  const backspacePressed = e.keyCode === backspaceKeyCode;
-  const fieldEmpty = e.target.value.length === 0;
+var focusPreviousIfEmpty = function focusPreviousIfEmpty(e) {
+  var backspaceKeyCode = 8;
+  var backspacePressed = e.keyCode === backspaceKeyCode;
+  var fieldEmpty = e.target.value.length === 0;
   if (!(backspacePressed && fieldEmpty)) {
     return;
   }
   e.preventDefault();
   e.stopPropagation();
-  const prevField = ReactDOM.findDOMNode(e.target).previousElementSibling;
+  var prevField = ReactDOM.findDOMNode(e.target).previousElementSibling;
   if (prevField && prevField.nodeName === 'INPUT') {
     prevField.focus();
   }
 };
 
 // parseAndConstrain : Number -> Number -> String -> Number
-const parseAndConstrain = (min, max, numString) => {
-  const parsed = parseInt(numString, 10);
-  const constrained = between(min, max, parsed);
-  assert.warn(!isNaN(constrained), `Error parsing ${ numString }`);
+var parseAndConstrain = function parseAndConstrain(min, max, numString) {
+  var parsed = parseInt(numString, 10);
+  var constrained = between(min, max, parsed);
+  assert.warn(!isNaN(constrained), 'Error parsing ' + numString);
   return constrained;
 };
 
-const millisecondsToBreakdownDate = ms => {
-  const date = new Date(ms);
+var millisecondsToBreakdownDate = function millisecondsToBreakdownDate(ms) {
+  var date = new Date(ms);
   return {
     day: date.getDate(),
     month: date.getMonth() + 1,
@@ -7663,21 +7742,25 @@ const millisecondsToBreakdownDate = ms => {
   };
 };
 
-const toDateString = d => `${ toDigits(4, d.year) }-${ toDigits(2, d.month) }-${ toDigits(2, d.day) }`;
+var toDateString = function toDateString(d) {
+  return toDigits(4, d.year) + '-' + toDigits(2, d.month) + '-' + toDigits(2, d.day);
+};
 
-const toMilliseconds = d => {
+var toMilliseconds = function toMilliseconds(d) {
   return flow(toDateString, Date.parse)(d);
 };
 
 // parseDate : (String | Number) -> (String | Number) -> (String | Number) -> { day, month, year }
 function parseDate(dayString, monthString, yearString) {
-  const initialDate = {
+  var initialDate = {
     day: parseAndConstrain(1, 31, dayString),
     month: parseAndConstrain(1, 12, monthString),
     year: parseAndConstrain(1, 2500, yearString)
   };
 
-  const dateIsValid = flow(toMilliseconds, millisecondsToBreakdownDate, parsed => JSON.stringify(initialDate) === JSON.stringify(parsed))(initialDate);
+  var dateIsValid = flow(toMilliseconds, millisecondsToBreakdownDate, function (parsed) {
+    return JSON.stringify(initialDate) === JSON.stringify(parsed);
+  })(initialDate);
 
   if (!dateIsValid) {
     // All values have been constrined to their allowed values, the only case
@@ -7685,7 +7768,7 @@ function parseDate(dayString, monthString, yearString) {
     // the maximum possible day value of the specified month. Like Feb 31
     // So we will decrease the day and try to parse again. If the day is already
     // quite low, then throw the error.
-    assert(initialDate.day > 25, `An unknown error occurred parsing the date ${ dayString }/${ monthString }/${ yearString }`);
+    assert(initialDate.day > 25, 'An unknown error occurred parsing the date ' + dayString + '/' + monthString + '/' + yearString);
     return parseDate(initialDate.day - 1, initialDate.month, initialDate.year);
   }
 
@@ -7694,23 +7777,27 @@ function parseDate(dayString, monthString, yearString) {
 
 // Returns an object with date components that form a valid date
 // Int -> Int -> String -> String -> String -> { day, month, year }
-const validateDateComponents = (appMinDate, appMaxDate, day, month, year) => {
-  const areAllFieldsFilled = day.length === 2 && month.length === 2 && year.length === 4;
+var validateDateComponents = function validateDateComponents(appMinDate, appMaxDate, day, month, year) {
+  var areAllFieldsFilled = day.length === 2 && month.length === 2 && year.length === 4;
 
   if (!areAllFieldsFilled) {
-    return { day, month, year };
+    return { day: day, month: month, year: year };
   }
-  const minDate = appMinDate || minDateDefault; // 1900-01-01
-  const maxDate = appMaxDate || maxDateDefault; // 2100-01-01
+  var minDate = appMinDate || minDateDefault; // 1900-01-01
+  var maxDate = appMaxDate || maxDateDefault; // 2100-01-01
 
-  return flow(() => parseDate(day, month, year), toMilliseconds, between(minDate, maxDate), millisecondsToBreakdownDate, d => ({
-    day: toDigits(2, d.day),
-    month: toDigits(2, d.month),
-    year: toDigits(4, d.year)
-  }))();
+  return flow(function () {
+    return parseDate(day, month, year);
+  }, toMilliseconds, between(minDate, maxDate), millisecondsToBreakdownDate, function (d) {
+    return {
+      day: toDigits(2, d.day),
+      month: toDigits(2, d.month),
+      year: toDigits(4, d.year)
+    };
+  })();
 };
 
-const typeInfo$3 = {
+var typeInfo = {
   // Compulsory
   type: 'DateField',
   displayName: 'Date Field',
@@ -7727,7 +7814,9 @@ const typeInfo$3 = {
 };
 
 // For Text Fields the initialState function will only return an object.
-const initialState = () => Object.assign({}, typeInfo$3);
+var initialState$3 = function initialState() {
+  return Object.assign({}, typeInfo);
+};
 
 // When configuration is open, this is what is going to be displayed
 /**
@@ -7735,48 +7824,59 @@ const initialState = () => Object.assign({}, typeInfo$3);
  * @param  {Object} state : State
  * @param  {Function} update : State -> void // Will trigger a re-render
  */
-const RenderEditor = ({ state, update }) => {
+var RenderEditor = function RenderEditor(_ref) {
+  var state = _ref.state,
+      update = _ref.update;
+
 
   // updateField : Object -> Object(the new state)
-  const updateState = changedState => {
-    const newState = Object.assign({}, state, changedState);
+  var updateState = function updateState(changedState) {
+    var newState = Object.assign({}, state, changedState);
     update(newState);
     return newState;
   };
 
   // updateField : Object -> Event -> Object(the new state)
-  const updateField = curry$1((fieldName, e) => {
-    const value = e.target.value || initialState()[fieldName];
-    return updateState({ [fieldName]: value });
+  var updateField = curry$1(function (fieldName, e) {
+    var value = e.target.value || initialState$3()[fieldName];
+    return updateState(defineProperty$3({}, fieldName, value));
   });
 
-  const dateOnChange = curry$1((min, max, datePart, e) => {
-    flow(get$2('target.value'), validate$1(min, max), v => updateState({ [datePart]: v }))(e);
+  var dateOnChange = curry$1(function (min, max, datePart, e) {
+    flow(get$3('target.value'), validate$1(min, max), function (v) {
+      return updateState(defineProperty$3({}, datePart, v));
+    })(e);
 
     focusNextIfFilled(max, e);
   });
 
-  const dateOnBlur = curry$1((appState, min, max, datePart, e) => {
-    flow(get$2('target.value'), validateAndPrettify(min, max), v => Object.assign({}, appState, { [datePart]: v }), s => validateDateComponents(s.minDate, s.maxDate, s.day, s.month, s.year), s => updateState(s))(e);
+  var dateOnBlur = curry$1(function (appState, min, max, datePart, e) {
+    flow(get$3('target.value'), validateAndPrettify(min, max), function (v) {
+      return Object.assign({}, appState, defineProperty$3({}, datePart, v));
+    }, function (s) {
+      return validateDateComponents(s.minDate, s.maxDate, s.day, s.month, s.year);
+    }, function (s) {
+      return updateState(s);
+    })(e);
   });
 
-  const setDateConstrain = curry$1((minMax, e) => {
-    const value = e.target.value;
-    const dateInMs = Date.parse(value);
-    const newConstrain = isNaN(dateInMs) ? undefined : dateInMs;
-    updateState({ [minMax]: newConstrain });
+  var setDateConstrain = curry$1(function (minMax, e) {
+    var value = e.target.value;
+    var dateInMs = Date.parse(value);
+    var newConstrain = isNaN(dateInMs) ? undefined : dateInMs;
+    updateState(defineProperty$3({}, minMax, newConstrain));
   });
 
-  const minDateMilliseconds = state.minDate || minDateDefault;
-  const maxDateMilliseconds = state.maxDate || maxDateDefault;
-  const msToDateString = flow(millisecondsToBreakdownDate, toDateString);
+  var minDateMilliseconds = state.minDate || minDateDefault;
+  var maxDateMilliseconds = state.maxDate || maxDateDefault;
+  var msToDateString = flow(millisecondsToBreakdownDate, toDateString);
 
-  const minDateString = msToDateString(minDateMilliseconds);
-  const maxDateString = msToDateString(maxDateMilliseconds);
-  const minYear = millisecondsToBreakdownDate(minDateMilliseconds).year;
-  const maxYear = millisecondsToBreakdownDate(maxDateMilliseconds).year;
+  var minDateString = msToDateString(minDateMilliseconds);
+  var maxDateString = msToDateString(maxDateMilliseconds);
+  var minYear = millisecondsToBreakdownDate(minDateMilliseconds).year;
+  var maxYear = millisecondsToBreakdownDate(maxDateMilliseconds).year;
 
-  const configurationBar = React.createElement(
+  var configurationBar = React.createElement(
     'div',
     { className: 'fl-fb-Field-config' },
     'From',
@@ -7850,23 +7950,23 @@ const RenderEditor = ({ state, update }) => {
   );
 };
 
-const ImageCards = {
-  info: typeInfo$3,
-  initialState,
-  RenderEditor
+var ImageCards = {
+  info: typeInfo,
+  initialState: initialState$3,
+  RenderEditor: RenderEditor
 };
 
 var customTypes = [ImageCards];
 
 var allTypes = {
-  baseTypes,
-  customTypes,
-  compositeTypes
+  baseTypes: baseTypes,
+  customTypes: customTypes,
+  compositeTypes: compositeTypes
 };
 
 /* eslint-env jasmine */
-describe("Smoke test", () => {
-  it("exports the public API", () => {
+describe("Smoke test", function () {
+  it("exports the public API", function () {
     expect(Object.keys(allTypes).includes("baseTypes")).toBeTruthy();
     expect(Object.keys(allTypes).includes("customTypes")).toBeTruthy();
     expect(Object.keys(allTypes).includes("compositeTypes")).toBeTruthy();
