@@ -7406,6 +7406,136 @@ var removeIfOptionIsNull$1 = curry$3(function (state, _ref) {
   return Object.assign({}, state, { options: options });
 });
 
+var _curry1$5 = _curry1$1;
+var _curry2$4 = _curry2$1;
+var _isPlaceholder$5 = _isPlaceholder$2;
+
+
+/**
+ * Optimized internal three-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+var _curry3$1 = function _curry3(fn) {
+  return function f3(a, b, c) {
+    switch (arguments.length) {
+      case 0:
+        return f3;
+      case 1:
+        return _isPlaceholder$5(a) ? f3
+             : _curry2$4(function(_b, _c) { return fn(a, _b, _c); });
+      case 2:
+        return _isPlaceholder$5(a) && _isPlaceholder$5(b) ? f3
+             : _isPlaceholder$5(a) ? _curry2$4(function(_a, _c) { return fn(_a, b, _c); })
+             : _isPlaceholder$5(b) ? _curry2$4(function(_b, _c) { return fn(a, _b, _c); })
+             : _curry1$5(function(_c) { return fn(a, b, _c); });
+      default:
+        return _isPlaceholder$5(a) && _isPlaceholder$5(b) && _isPlaceholder$5(c) ? f3
+             : _isPlaceholder$5(a) && _isPlaceholder$5(b) ? _curry2$4(function(_a, _b) { return fn(_a, _b, c); })
+             : _isPlaceholder$5(a) && _isPlaceholder$5(c) ? _curry2$4(function(_a, _c) { return fn(_a, b, _c); })
+             : _isPlaceholder$5(b) && _isPlaceholder$5(c) ? _curry2$4(function(_b, _c) { return fn(a, _b, _c); })
+             : _isPlaceholder$5(a) ? _curry1$5(function(_a) { return fn(_a, b, c); })
+             : _isPlaceholder$5(b) ? _curry1$5(function(_b) { return fn(a, _b, c); })
+             : _isPlaceholder$5(c) ? _curry1$5(function(_c) { return fn(a, b, _c); })
+             : fn(a, b, c);
+    }
+  };
+};
+
+var _curry2$5 = _curry2$1;
+
+
+/**
+ * Returns the second argument if it is not `null`, `undefined` or `NaN`
+ * otherwise the first argument is returned.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.10.0
+ * @category Logic
+ * @sig a -> b -> a | b
+ * @param {a} default The default value.
+ * @param {b} val `val` will be returned instead of `default` unless `val` is `null`, `undefined` or `NaN`.
+ * @return {*} The second value if it is not `null`, `undefined` or `NaN`, otherwise the default value
+ * @example
+ *
+ *      var defaultTo42 = R.defaultTo(42);
+ *
+ *      defaultTo42(null);  //=> 42
+ *      defaultTo42(undefined);  //=> 42
+ *      defaultTo42('Ramda');  //=> 'Ramda'
+ *      // parseInt('string') results in NaN
+ *      defaultTo42(parseInt('string')); //=> 42
+ */
+var defaultTo$1 = _curry2$5(function defaultTo(d, v) {
+  return v == null || v !== v ? d : v;
+});
+
+var _curry2$6 = _curry2$1;
+
+
+/**
+ * Retrieve the value at a given path.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.2.0
+ * @category Object
+ * @typedefn Idx = String | Int
+ * @sig [Idx] -> {a} -> a | Undefined
+ * @param {Array} path The path to use.
+ * @param {Object} obj The object to retrieve the nested property from.
+ * @return {*} The data at `path`.
+ * @see R.prop
+ * @example
+ *
+ *      R.path(['a', 'b'], {a: {b: 2}}); //=> 2
+ *      R.path(['a', 'b'], {c: {b: 2}}); //=> undefined
+ */
+var path$1 = _curry2$6(function path(paths, obj) {
+  var val = obj;
+  var idx = 0;
+  while (idx < paths.length) {
+    if (val == null) {
+      return;
+    }
+    val = val[paths[idx]];
+    idx += 1;
+  }
+  return val;
+});
+
+var _curry3 = _curry3$1;
+var defaultTo = defaultTo$1;
+var path = path$1;
+
+
+/**
+ * If the given, non-null object has a value at the given path, returns the
+ * value at that path. Otherwise returns the provided default value.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.18.0
+ * @category Object
+ * @typedefn Idx = String | Int
+ * @sig a -> [Idx] -> {a} -> a
+ * @param {*} d The default value.
+ * @param {Array} p The path to use.
+ * @param {Object} obj The object to retrieve the nested property from.
+ * @return {*} The data at `path` of the supplied object or the default value.
+ * @example
+ *
+ *      R.pathOr('N/A', ['a', 'b'], {a: {b: 2}}); //=> 2
+ *      R.pathOr('N/A', ['a', 'b'], {c: {b: 2}}); //=> "N/A"
+ */
+var pathOr = _curry3(function pathOr(d, p, obj) {
+  return defaultTo(d, path(p, obj));
+});
+
 var defineProperty$3 = function (obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -7435,12 +7565,12 @@ var _extends = Object.assign || function (target) {
   return target;
 };
 
-var updateProperty$1 = curry$1(function (state, _ref) {
+var updateProperty$1 = curry$3(function (state, _ref) {
   var initialState = _ref.initialState,
       propName = _ref.propName,
       event = _ref.event;
 
-  var value = event.target.value;
+  var value = pathOr(null, ["target", "value"], event);
   var newValue = value || initialState()[propName];
 
   return Object.assign({}, state, defineProperty$3({}, propName, newValue));

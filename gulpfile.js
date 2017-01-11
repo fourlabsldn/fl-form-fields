@@ -11,7 +11,7 @@ organiser.registerAll("./gulp-tasks", {
     src: "./dist/fl-form-fields-tests.js",
   },
   "transpile-react": {
-    main: {
+    "main": {
       watch: path.join(src, "/**/*.js"),
       src: path.join(src, "index.js"),
       dest,
@@ -22,7 +22,7 @@ organiser.registerAll("./gulp-tasks", {
         moduleName: "flFormFields",
       },
     },
-    tests: {
+    "tests": {
       watch: "tests/**/*.js",
       src: "tests/index.js",
       dest,
@@ -38,5 +38,9 @@ organiser.registerAll("./gulp-tasks", {
     reloadOn: ["transpile-react"], // reload page when these tasks happen
     startPath: "examples/all_fields/index.html",
     baseDir: "./",
+  },
+  "watch": {
+    src: ".",
+    taskNames: ["transpile-react:tests", "transpile-react:main"],
   },
 });

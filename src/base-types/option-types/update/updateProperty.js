@@ -1,7 +1,7 @@
-import { curry } from "lodash/fp";
+import { curry, pathOr } from "ramda";
 
 export default curry((state, { initialState, propName, event }) => {
-  const value = event.target.value;
+  const value = pathOr(null, ["target", "value"], event);
   const newValue = value || initialState()[propName];
 
   return Object.assign({}, state, {
