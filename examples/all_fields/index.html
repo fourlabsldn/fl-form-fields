@@ -4,6 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <!-- Polyfills for IE9 -->
+    <!--
+          If you are supporting IE9 you need to include babel-polyfill in your page
+          This demo alredy has the polyfills included in the test files
+    -->
+
+    <!-- Jasmine -->
+    <link rel="stylesheet" type="text/css" href="../../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+    <!-- Tests  -->
+    <script type="text/javascript" src="../../dist/fl-form-fields-tests.js"></script>
 
     <!-- Dependencies -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -18,13 +31,7 @@
     <!-- Form Fields -->
     <script src="../../dist/fl-form-fields.js"></script>
 
-    <!-- Jasmine -->
-    <link rel="stylesheet" type="text/css" href="../../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
-    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
-    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
-    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
-    <!-- Tests  -->
-    <script type="text/javascript" src="../../dist/fl-form-fields-tests.js"></script>
+
 
     <style>
       body {
@@ -41,8 +48,8 @@
     <script>
         // Our custom components array:
         console.log(flFormFields);
-        const customComponents = flFormFields.baseTypes;
-        const container = document.querySelector('.form-builder-container');
+        var customComponents = flFormFields.baseTypes;
+        var container = document.querySelector('.form-builder-container');
 
         new FormBuilder(container, customComponents);
     </script>

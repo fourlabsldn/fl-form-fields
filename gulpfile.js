@@ -1,5 +1,6 @@
 /* eslint-disable quote-props */
 // List all available tasks
+require('babel-core/register');
 
 const src = "src";
 const dest = "dist";
