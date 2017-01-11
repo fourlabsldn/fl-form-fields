@@ -4,8 +4,8 @@ import defaultConfig from "./utils/default-config";
 
 const info =
   {
-    type: "Checkboxes",
-    displayName: "Checkboxes",
+    type: "Dropdown",
+    displayName: "Dropdown",
     group: "Options Components",
   };
 
@@ -14,7 +14,6 @@ const initialState = () =>
     // Field type specific
     ...defaultConfig,
     ...info,
-    htmlInputType: "checkbox",
   });
 
 export default {
