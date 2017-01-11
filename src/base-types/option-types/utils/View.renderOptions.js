@@ -31,7 +31,7 @@ export const renderRadioOrCheckboxOptions = (state, update) => {
         value={option.caption}
         name={state.title}
       />
-      <span className="fl-fb-Field-option-text"> {option.caption} </span>
+      <span className="fl-fb-Field-option-text">{option.caption}</span>
     </div>
   ));
 };
@@ -56,8 +56,10 @@ export const renderDropdownOptions = (state, update) => {
 
   return (
     <select className="form-control">
+      <option disabled>Please select an option</option>
+
       {state.options.map(option => (
-        <option value={option.caption}> {option.caption} </option>
+        <option value={option.value || option.caption}>{option.caption}</option>
       ))}
     </select>
   );

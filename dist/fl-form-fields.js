@@ -7053,9 +7053,7 @@ var renderRadioOrCheckboxOptions = function renderRadioOrCheckboxOptions(state, 
       React.createElement(
         "span",
         { className: "fl-fb-Field-option-text" },
-        " ",
-        option.caption,
-        " "
+        option.caption
       )
     );
   });
@@ -7085,13 +7083,16 @@ var renderDropdownOptions = function renderDropdownOptions(state, update) {
   return React.createElement(
     "select",
     { className: "form-control" },
+    React.createElement(
+      "option",
+      { disabled: true },
+      "Please select an option"
+    ),
     state.options.map(function (option) {
       return React.createElement(
         "option",
-        { value: option.caption },
-        " ",
-        option.caption,
-        " "
+        { value: option.value || option.caption },
+        option.caption
       );
     })
   );
@@ -7731,15 +7732,13 @@ var Checkboxes = {
 
 /* eslint-disable new-cap */
 var info$2 = {
-  type: "Checkboxes",
-  displayName: "Checkboxes",
+  type: "Dropdown",
+  displayName: "Dropdown",
   group: "Options Components"
 };
 
 var initialState$2 = function initialState() {
-  return _extends({}, defaultConfig, info$2, {
-    htmlInputType: "checkbox"
-  });
+  return _extends({}, defaultConfig, info$2);
 };
 
 var Dropdown = {

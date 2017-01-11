@@ -17044,9 +17044,7 @@ var renderRadioOrCheckboxOptions = function renderRadioOrCheckboxOptions(state, 
       react.createElement(
         "span",
         { className: "fl-fb-Field-option-text" },
-        " ",
-        option.caption,
-        " "
+        option.caption
       )
     );
   });
@@ -17076,13 +17074,16 @@ var renderDropdownOptions = function renderDropdownOptions(state, update) {
   return react.createElement(
     "select",
     { className: "form-control" },
+    react.createElement(
+      "option",
+      { disabled: true },
+      "Please select an option"
+    ),
     state.options.map(function (option) {
       return react.createElement(
         "option",
-        { value: option.caption },
-        " ",
-        option.caption,
-        " "
+        { value: option.value || option.caption },
+        option.caption
       );
     })
   );
@@ -17746,15 +17747,13 @@ var Checkboxes = {
 
 /* eslint-disable new-cap */
 var info$2 = {
-  type: "Checkboxes",
-  displayName: "Checkboxes",
+  type: "Dropdown",
+  displayName: "Dropdown",
   group: "Options Components"
 };
 
 var initialState$2 = function initialState() {
-  return _extends({}, defaultConfig, info$2, {
-    htmlInputType: "checkbox"
-  });
+  return _extends({}, defaultConfig, info$2);
 };
 
 var Dropdown = {
@@ -34074,6 +34073,133 @@ describe("action updateProperty", function () {
     expect(action.initialState).toBe(init);
     expect(action.propName).toBe(name);
     expect(action.event).toBe(ev);
+  });
+});
+
+/* eslint-env jasmine */
+/* eslint-disable quote-props */
+
+var mockState = {
+  "type": "Dropdown",
+  "displayName": "Dropdown",
+  "group": "Options Components",
+  "required": true,
+  "title": "My Title",
+  "options": [{
+    "caption": "Option number 1"
+  }, {
+    "caption": "Option number 2"
+  }, {
+    "caption": "Option number 3",
+    "value": "number 3"
+  }],
+  "newOptionCaption": "new option",
+  "id": 1484138162795,
+  "configShowing": true
+};
+
+var id$2 = function id(_) {
+  return _;
+};
+
+describe("Dropdown.View with config showing", function () {
+  var container = void 0;
+  beforeEach(function () {
+    container = document.createElement("div");
+    index$4.render(Dropdown.RenderEditor({ state: mockState, update: id$2 }), container); // eslint-disable-line new-cap, max-len
+  });
+
+  it("makes the title editable", function () {
+    var titleInput = container.querySelector("h2").querySelector("input");
+    expect(titleInput.value).toBe(mockState.title);
+  });
+
+  it("makes options editable", function () {
+    var inputs = container.querySelectorAll("input");
+    var inputsContents = [].map.call(inputs, function (i) {
+      return i.value;
+    });
+
+    expect(inputsContents.indexOf(mockState.options[0].caption)).not.toBe(-1);
+    expect(inputsContents.indexOf(mockState.options[1].caption)).not.toBe(-1);
+    expect(inputsContents.indexOf(mockState.options[2].caption)).not.toBe(-1);
+  });
+
+  it("creates an input box for new options", function () {
+    var newOptionInput = container.querySelector("input[value=\"" + mockState.newOptionCaption + "\"]");
+    expect(newOptionInput).not.toBe(undefined);
+  });
+});
+
+/* eslint-env jasmine */
+/* eslint-disable quote-props */
+
+var mockState$1 = {
+  "type": "Dropdown",
+  "displayName": "Dropdown",
+  "group": "Options Components",
+  "required": true,
+  "title": "My Title",
+  "options": [{
+    "caption": "Option number 1"
+  }, {
+    "caption": "Option number 2"
+  }, {
+    "caption": "Option number 3",
+    "value": "number 3"
+  }],
+  "newOptionCaption": "",
+  "id": 1484138162795,
+  "configShowing": false
+};
+
+var id$3 = function id(_) {
+  return _;
+};
+
+describe("Dropdown.View with config not showing", function () {
+  var container = void 0;
+  beforeEach(function () {
+    container = document.createElement("div");
+    index$4.render(Dropdown.RenderEditor({ state: mockState$1, update: id$3 }), container); // eslint-disable-line new-cap, max-len
+  });
+
+  it("outputs at least something", function () {
+    expect(container.children.length).toBeGreaterThan(0);
+  });
+
+  it("adds the title that is in the state", function () {
+    var title = container.querySelector("h2");
+    expect(title.innerHTML).toBe(mockState$1.title);
+  });
+
+  it("adds a default placeholder", function () {
+    var options = container.querySelectorAll("option");
+    expect(options[0].innerHTML).toBe("Please select an option");
+  });
+
+  it("adds the default placeholder as selected and disabled", function () {
+    var options = container.querySelectorAll("option");
+    expect(options[0].hasAttribute("disabled")).toBe(true);
+  });
+
+  it("creates the correct option elements", function () {
+    var options = container.querySelectorAll("option");
+    expect(options.length).toBe(mockState$1.options.length + 1);
+    expect(options[1].innerHTML).toBe(mockState$1.options[0].caption);
+    expect(options[2].innerHTML).toBe(mockState$1.options[1].caption);
+    expect(options[3].innerHTML).toBe(mockState$1.options[2].caption);
+  });
+
+  it("adds the caption content as option `value` if no value key is specified", function () {
+    var options = container.querySelectorAll("option");
+    expect(options[1].getAttribute("value")).toBe(mockState$1.options[0].caption);
+    expect(options[2].getAttribute("value")).toBe(mockState$1.options[1].caption);
+  });
+
+  it("adds the value content as option `value` if specified", function () {
+    var options = container.querySelectorAll("option");
+    expect(options[3].getAttribute("value")).toBe(mockState$1.options[2].value);
   });
 });
 
