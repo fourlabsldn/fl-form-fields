@@ -1,5 +1,5 @@
 /* eslint-disable new-cap */
-import View from "./utils/View";
+import View from "./View";
 import defaultConfig from "./utils/default-config";
 
 const info =

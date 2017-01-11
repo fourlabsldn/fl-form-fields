@@ -6975,133 +6975,6 @@ var ifEnterPressed = curry$1(function (f, e) {
   }
 });
 
-// Possible state-changing actions
-
-var addOption = function addOption(initialState) {
-  return {
-    type: "addOption",
-    initialState: initialState
-  };
-};
-
-var removeOption = function removeOption() {
-  return {
-    type: "removeOption"
-  };
-};
-
-var removeIfOptionIsNull = function removeIfOptionIsNull(optionIndex, event) {
-  return {
-    type: "removeIfOptionIsNull",
-    optionIndex: optionIndex,
-    event: event
-  };
-};
-
-var updateOption = function updateOption(optionIndex, event) {
-  return {
-    type: "updateOption",
-    optionIndex: optionIndex,
-    event: event
-  };
-};
-
-var updateProperty = function updateProperty(initialState, propName, event) {
-  return {
-    type: "updateProperty",
-    initialState: initialState,
-    propName: propName,
-    event: event
-  };
-};
-
-var renderRadioOrCheckboxOptions = function renderRadioOrCheckboxOptions(state, update) {
-  if (state.configShowing) {
-    return state.options.map(function (option, optionIndex) {
-      return React.createElement(
-        "div",
-        { className: "fl-fb-Field-option" },
-        React.createElement("input", {
-          type: state.htmlInputType,
-          value: option.caption,
-          name: state.title
-        }),
-        React.createElement("input", {
-          type: "text",
-          className: "fl-fb-Field-option-text fl-fb-Field-editable",
-          value: option.caption,
-          onKeyPress: ifEnterPressed(function (e) {
-            return update(removeIfOptionIsNull(optionIndex, e));
-          }),
-          onChange: function onChange(e) {
-            return update(updateOption(optionIndex, e));
-          }
-        })
-      );
-    });
-  }
-
-  return state.options.map(function (option) {
-    return React.createElement(
-      "div",
-      { className: "fl-fb-Field-option" },
-      React.createElement("input", {
-        type: state.htmlInputType,
-        value: option.caption,
-        name: state.title
-      }),
-      React.createElement(
-        "span",
-        { className: "fl-fb-Field-option-text" },
-        option.caption
-      )
-    );
-  });
-};
-
-var renderDropdownOptions = function renderDropdownOptions(state, update) {
-  if (state.configShowing) {
-    return state.options.map(function (option, optionIndex) {
-      return React.createElement(
-        "div",
-        { className: "fl-fb-Field-option" },
-        React.createElement("input", {
-          className: "fl-fb-Field-editable",
-          type: "text",
-          value: option.caption,
-          onKeyPress: ifEnterPressed(function (e) {
-            return update(removeIfOptionIsNull(optionIndex, e));
-          }),
-          onChange: function onChange(e) {
-            return update(updateOption(optionIndex, e));
-          }
-        })
-      );
-    });
-  }
-
-  return React.createElement(
-    "select",
-    { className: "form-control" },
-    React.createElement(
-      "option",
-      { disabled: true },
-      "Please select an option"
-    ),
-    state.options.map(function (option) {
-      return React.createElement(
-        "option",
-        { value: option.value || option.caption },
-        option.caption
-      );
-    })
-  );
-};
-
-var renderOptions = (function (state, update) {
-  return state.type === "Dropdown" ? renderDropdownOptions(state, update) : renderRadioOrCheckboxOptions(state, update);
-});
-
 var _isPlaceholder$2 = function _isPlaceholder(a) {
   return a != null &&
          typeof a === 'object' &&
@@ -7182,7 +7055,7 @@ var _curry2 = _curry2$1;
 var prop = _curry2(function prop(p, obj) { return obj[p]; });
 
 // Add the option in the config input fields
-var addOption$1 = (function (state, _ref) {
+var addOption = (function (state, _ref) {
   var initialState = _ref.initialState;
 
   var newOption = {
@@ -7210,7 +7083,7 @@ var addOption$1 = (function (state, _ref) {
 });
 
 // Remove the last option
-var removeOption$1 = (function (state) {
+var removeOption = (function (state) {
   return Object.assign({}, state, {
     options: state.options.slice(0, state.options.length - 1)
   });
@@ -7380,7 +7253,7 @@ var curry$3 = _curry1$3(function curry(fn) {
 });
 
 // Updated the caption text of an existing option
-var updateOption$1 = curry$3(function (state, _ref) {
+var updateOption = curry$3(function (state, _ref) {
   var optionIndex = _ref.optionIndex,
       event = _ref.event;
 
@@ -7392,7 +7265,7 @@ var updateOption$1 = curry$3(function (state, _ref) {
   return Object.assign({}, state, { options: options });
 });
 
-var removeIfOptionIsNull$1 = curry$3(function (state, _ref) {
+var removeIfOptionIsNull = curry$3(function (state, _ref) {
   var optionIndex = _ref.optionIndex,
       event = _ref.event;
 
@@ -7566,7 +7439,7 @@ var _extends = Object.assign || function (target) {
   return target;
 };
 
-var updateProperty$1 = curry$3(function (state, _ref) {
+var updateProperty = curry$3(function (state, _ref) {
   var initialState = _ref.initialState,
       propName = _ref.propName,
       event = _ref.event;
@@ -7578,18 +7451,147 @@ var updateProperty$1 = curry$3(function (state, _ref) {
 });
 
 var possibleActions = {
-  addOption: addOption$1,
-  removeOption: removeOption$1,
-  updateOption: updateOption$1,
-  removeIfOptionIsNull: removeIfOptionIsNull$1,
-  updateProperty: updateProperty$1
+  addOption: addOption,
+  removeOption: removeOption,
+  updateOption: updateOption,
+  removeIfOptionIsNull: removeIfOptionIsNull,
+  updateProperty: updateProperty
 };
 
 var update = function update(state, action) {
   return possibleActions[action.type](state, action);
 };
 
+// Possible state-changing actions
+
+var addOption$1 = function addOption(initialState) {
+  return {
+    type: "addOption",
+    initialState: initialState
+  };
+};
+
+var removeOption$1 = function removeOption() {
+  return {
+    type: "removeOption"
+  };
+};
+
+var removeIfOptionIsNull$1 = function removeIfOptionIsNull(optionIndex, event) {
+  return {
+    type: "removeIfOptionIsNull",
+    optionIndex: optionIndex,
+    event: event
+  };
+};
+
+var updateOption$1 = function updateOption(optionIndex, event) {
+  return {
+    type: "updateOption",
+    optionIndex: optionIndex,
+    event: event
+  };
+};
+
+var updateProperty$1 = function updateProperty(initialState, propName, event) {
+  return {
+    type: "updateProperty",
+    initialState: initialState,
+    propName: propName,
+    event: event
+  };
+};
+
+var configView = curry$3(function (state, update, option, optionIndex) {
+  return React.createElement(
+    "div",
+    { className: "fl-fb-Field-option" },
+    React.createElement("input", {
+      className: "fl-fb-Field-editable",
+      type: "text",
+      value: option.caption,
+      onKeyPress: ifEnterPressed(function (e) {
+        return update(removeIfOptionIsNull$1(optionIndex, e));
+      }),
+      onChange: function onChange(e) {
+        return update(updateOption$1(optionIndex, e));
+      }
+    })
+  );
+});
+
+var formView = function formView(state) {
+  return React.createElement(
+    "select",
+    { className: "form-control" },
+    React.createElement(
+      "option",
+      { disabled: true },
+      "Please select an option"
+    ),
+    state.options.map(function (option) {
+      return React.createElement(
+        "option",
+        { value: option.value || option.caption },
+        option.caption
+      );
+    })
+  );
+};
+
+var dropdownOptions = (function (state, update) {
+  return state.configShowing ? state.options.map(configView(state, update)) : formView(state);
+});
+
+var configView$1 = curry$3(function (state, update, option, optionIndex) {
+  return React.createElement(
+    "div",
+    { className: "fl-fb-Field-option" },
+    React.createElement("input", {
+      type: state.htmlInputType,
+      value: option.caption,
+      name: state.title
+    }),
+    React.createElement("input", {
+      type: "text",
+      className: "fl-fb-Field-option-text fl-fb-Field-editable",
+      value: option.caption,
+      onKeyPress: ifEnterPressed(function (e) {
+        return update(removeIfOptionIsNull$1(optionIndex, e));
+      }),
+      onChange: function onChange(e) {
+        return update(updateOption$1(optionIndex, e));
+      }
+    })
+  );
+});
+
+var formView$1 = curry$3(function (state, update, option) {
+  return React.createElement(
+    "div",
+    { className: "fl-fb-Field-option" },
+    React.createElement("input", {
+      type: state.htmlInputType,
+      value: option.caption,
+      name: state.title
+    }),
+    React.createElement(
+      "span",
+      { className: "fl-fb-Field-option-text" },
+      option.caption
+    )
+  );
+});
+
+var checkRadioOptions = (function (state, update) {
+  return state.configShowing ? state.options.map(configView$1(state, update)) : state.options.map(formView$1(state, update));
+});
+
 /* eslint-disable new-cap */
+
+var renderOptions = function renderOptions(state, update$$1) {
+  return state.type === "Dropdown" ? dropdownOptions(state, update$$1) : checkRadioOptions(state, update$$1);
+};
 
 /**
  * When configuration is open, this is what is going to be displayed
@@ -7611,7 +7613,7 @@ var ConfigurationView = function ConfigurationView(initialState, _ref) {
         type: "text",
         className: "fl-fb-Field-editable",
         onChange: function onChange(e) {
-          return update$$1(updateProperty(initialState, "title", e));
+          return update$$1(updateProperty$1(initialState, "title", e));
         },
         defaultValue: state.title
       })
@@ -7622,13 +7624,13 @@ var ConfigurationView = function ConfigurationView(initialState, _ref) {
       { className: "fl-fb-Field-config" },
       React.createElement("button", {
         onMouseDown: function onMouseDown() {
-          return update$$1(removeOption());
+          return update$$1(removeOption$1());
         },
         className: "glyphicon-minus-sign glyphicon fl-fb-Field-config-btn"
       }),
       React.createElement("button", {
         onMouseDown: function onMouseDown() {
-          return update$$1(addOption(initialState));
+          return update$$1(addOption$1(initialState));
         },
         className: "glyphicon-plus-sign glyphicon fl-fb-Field-config-btn"
       }),
@@ -7638,10 +7640,10 @@ var ConfigurationView = function ConfigurationView(initialState, _ref) {
         value: state.newOptionCaption,
         placeholder: "Type a new option caption",
         onChange: function onChange(e) {
-          return update$$1(updateProperty(initialState, "newOptionCaption", e));
+          return update$$1(updateProperty$1(initialState, "newOptionCaption", e));
         },
         onKeyPress: ifEnterPressed(function () {
-          return update$$1(addOption(initialState));
+          return update$$1(addOption$1(initialState));
         })
       })
     )
