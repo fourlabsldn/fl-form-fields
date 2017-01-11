@@ -17585,7 +17585,6 @@ var updateProperty$1 = curry$3(function (state, _ref) {
       propName = _ref.propName,
       event = _ref.event;
 
-  console.log(event);
   var value = pathOr(null, ["target", "value"], event);
   var newValue = value || initialState()[propName];
 
@@ -33960,6 +33959,43 @@ describe("option-type update.updateProperty", function () {
     expect(function () {
       return update(mockState, action);
     }).not.toThrow();
+  });
+});
+
+/* eslint-env jasmine */
+describe("option-type update.removeOption", function () {
+  var mockState = {
+    prop1: "prop1",
+    prop2: "prop2",
+    options: [{ caption: "default caption1" }, { caption: "default caption2" }, { caption: "default caption3" }]
+  };
+
+  it("removes only the last option", function () {
+    var action = removeOption();
+    var newState = update(mockState, action);
+    expect(newState.options.length).toBe(mockState.options.length - 1);
+    expect(newState.options[0]).toBe(mockState.options[0]);
+    expect(newState.options[1]).toBe(mockState.options[1]);
+  });
+
+  it("doesn't throw if there are no options", function () {
+    var mockNoOptionsState = Object.assign({}, mockState, {
+      options: []
+    });
+
+    var action = removeOption();
+    expect(function () {
+      return update(mockNoOptionsState, action);
+    }).not.toThrow();
+
+    expect(update(mockNoOptionsState, action).options.length).toBe(0);
+  });
+
+  it("doesn't change other state properties", function () {
+    var action = removeOption();
+    var newState = update(mockState, action);
+    expect(newState.prop1).toBe(mockState.prop1);
+    expect(newState.prop2).toBe(mockState.prop2);
   });
 });
 

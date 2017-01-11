@@ -23,7 +23,7 @@ organiser.registerAll("./gulp-tasks", {
       },
     },
     "tests": {
-      watch: "tests/**/*.js",
+      watch: [path.join(src, "/**/*.js"), "tests/**/*.js"],
       src: "tests/index.js",
       dest,
       rename: "fl-form-fields-tests.js",
