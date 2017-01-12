@@ -1,6 +1,5 @@
 /* eslint-disable quote-props */
 // List all available tasks
-require('babel-core/register');
 
 const src = "src";
 const dest = "dist";
@@ -13,8 +12,8 @@ organiser.registerAll("./gulp-tasks", {
   },
   "transpile-react": {
     "main": {
-      watch: path.join(src, "/**/*.js"),
-      src: path.join(src, "index.js"),
+      watch: path.join(src, "js/**/*.js"),
+      src: path.join(src, "js/index.js"),
       dest,
       rename: "fl-form-fields.js",
       config: {
@@ -24,8 +23,8 @@ organiser.registerAll("./gulp-tasks", {
       },
     },
     "tests": {
-      watch: [path.join(src, "/**/*.js"), "tests/**/*.js"],
-      src: "tests/index.js",
+      watch: [path.join(src, "js/**/*.js"), "src/tests/**/*.js"],
+      src: "src/tests/index.js",
       dest,
       rename: "fl-form-fields-tests.js",
       config: {
@@ -33,6 +32,11 @@ organiser.registerAll("./gulp-tasks", {
         format: "umd",
       },
     },
+  },
+  "sass": {
+    watch: path.join(src, "scss/**/*"),
+    src: path.join(src, "scss/main.scss"),
+    dest,
   },
   "browser-sync": {
     src: ".", // it doesn"t matter, it"s just so the task object is not ignored.
@@ -43,5 +47,9 @@ organiser.registerAll("./gulp-tasks", {
   "watch": {
     src: ".",
     taskNames: ["transpile-react:tests", "transpile-react:main"],
+  },
+  "build": {
+    src: ".",
+    tasks: ["sass", "transpile-react"],
   },
 });

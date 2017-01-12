@@ -31249,20 +31249,24 @@ var configView = curry$3(function (state, update, option, optionIndex) {
 
 var formView = function formView(state) {
   return react.createElement(
-    "select",
-    { className: "form-control" },
+    "div",
+    { className: "fl-fb-Field-dropdown-options" },
     react.createElement(
-      "option",
-      { disabled: true },
-      "Please select an option"
-    ),
-    state.options.map(function (option) {
-      return react.createElement(
+      "select",
+      { className: "fl-fb-Field-dropdown-options-select" },
+      react.createElement(
         "option",
-        { value: option.value || option.caption },
-        option.caption
-      );
-    })
+        { disabled: true },
+        "Please select an option"
+      ),
+      state.options.map(function (option) {
+        return react.createElement(
+          "option",
+          { value: option.value || option.caption },
+          option.caption
+        );
+      })
+    )
   );
 };
 
