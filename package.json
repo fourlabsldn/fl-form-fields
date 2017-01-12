@@ -9,7 +9,7 @@
         "build": "gulp transpile-react",
         "demo": "gulp browser-sync",
         "test": "gulp test-headless",
-        "push-dist": "git checkout dist && git rebase master && npm run build && npm run test && git add -A && git commit && git checkout master"
+        "push-dist": "git checkout dist && git rebase master && npm run build && npm run test && git add -A && git commit && git push && git checkout master"
     },
     "devDependencies": {
         "babel-plugin-lodash": "^3.2.11",
