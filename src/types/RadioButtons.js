@@ -1,11 +1,11 @@
 /* eslint-disable new-cap */
-import View from "./View";
-import defaultConfig from "./utils/default-config";
+import View from "../lib/option-type-utils/View";
+import defaultConfig from "../lib/option-type-utils/default-config";
 
 const info =
   {
-    type: "Checkboxes",
-    displayName: "Checkboxes",
+    type: "RadioButtons",
+    displayName: "Radio Button",
     group: "Options Components",
   };
 
@@ -14,7 +14,7 @@ const initialState = () =>
     // Field type specific
     ...defaultConfig,
     ...info,
-    htmlInputType: "checkbox",
+    htmlInputType: "radio",
   });
 
 export default {

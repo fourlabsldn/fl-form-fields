@@ -1,11 +1,11 @@
 /* eslint-disable new-cap */
-import View from "./View";
-import defaultConfig from "./utils/default-config";
+import View from "../lib/option-type-utils/View";
+import defaultConfig from "../lib/option-type-utils/default-config";
 
 const info =
   {
-    type: "RadioButtons",
-    displayName: "Radio Button",
+    type: "Dropdown",
+    displayName: "Dropdown",
     group: "Options Components",
   };
 
@@ -14,7 +14,6 @@ const initialState = () =>
     // Field type specific
     ...defaultConfig,
     ...info,
-    htmlInputType: "radio",
   });
 
 export default {

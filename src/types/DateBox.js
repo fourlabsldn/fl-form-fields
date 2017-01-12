@@ -164,8 +164,8 @@ const validateDateComponents = (appMinDate, appMaxDate, day, month, year) => {
 
 const typeInfo = {
   // Compulsory
-  type: 'DateField',
-  displayName: 'Date Field',
+  type: 'DateBox',
+  displayName: 'Date Box',
   group: 'Text Components',
   required: false,
   configShowing: false,

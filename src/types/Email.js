@@ -1,4 +1,4 @@
-import buildTextFieldConstructor from './buildTextFieldConstructor';
+import buildTextFieldConstructor from "../lib/text-type-constructor";
 
 const EmailBox = buildTextFieldConstructor({
   type: 'EmailBox',

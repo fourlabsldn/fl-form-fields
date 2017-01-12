@@ -31,8 +31,6 @@
     <!-- Form Fields -->
     <script src="../../dist/fl-form-fields.js"></script>
 
-
-
     <style>
       body {
         max-width: 700px;
@@ -47,11 +45,9 @@
 
     <script>
         // Our custom components array:
-        console.log(flFormFields);
-        var customComponents = flFormFields.baseTypes;
         var container = document.querySelector('.form-builder-container');
 
-        new FormBuilder(container, customComponents);
+        new FormBuilder(container, flFormFields);
     </script>
 </body>
 

@@ -1,4 +1,4 @@
-import buildTextFieldConstructor from './buildTextFieldConstructor';
+import buildTextFieldConstructor from "../lib/text-type-constructor";
 
 const TextBox = buildTextFieldConstructor({
   type: 'NumberBox',

@@ -8,7 +8,6 @@
  */
 
 import React from 'react';
-import { overshadow } from '../utils';
 import { curry } from 'lodash';
 
 // ========== UTILS =================== //
@@ -17,7 +16,7 @@ const updateField = curry((update, state, initialState, fieldName, event) => {
   const value = event.target.value;
   // Update or fallback to default value
   const newValue = value || initialState[fieldName];
-  const newState = overshadow(state, { [fieldName]: newValue });
+  const newState = Object.assign({}, state, { [fieldName]: newValue });
   update(newState);
 });
 
@@ -103,7 +102,7 @@ const RenderFormMode = ({ state }) => {
 
 
 export default function buildTextFieldConstructor(customTypeInfo) {
-  const typeInfo = overshadow(templateTypeInfo, customTypeInfo);
+  const typeInfo = Object.assign({}, templateTypeInfo, customTypeInfo);
 
   const initialState = createInitialState(typeInfo, componentFields);
 
