@@ -6,7 +6,7 @@
     "author": "Lazamar @ FourLabs",
     "license": "MIT",
     "scripts": {
-        "build": "gulp build",
+        "build": "gulp transpile-react",
         "demo": "gulp browser-sync",
         "test": "gulp test-headless",
         "push-dist": "git checkout dist && git rebase master && npm run build && npm run test && git add -A && git commit && git checkout master"
