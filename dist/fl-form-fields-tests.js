@@ -31423,18 +31423,18 @@ var defaultConfig = {
 
 /* eslint-disable new-cap */
 var info = {
-  type: "RadioButtons",
-  displayName: "Radio Button",
+  type: "Checkboxes",
+  displayName: "Checkboxes",
   group: "Options Components"
 };
 
 var initialState = function initialState() {
   return _extends({}, defaultConfig, info, {
-    htmlInputType: "radio"
+    htmlInputType: "checkbox"
   });
 };
 
-var RadioButtons = {
+var Checkboxes = {
   info: info,
   initialState: initialState,
   RenderEditor: View(initialState)
@@ -31442,18 +31442,18 @@ var RadioButtons = {
 
 /* eslint-disable new-cap */
 var info$1 = {
-  type: "Checkboxes",
-  displayName: "Checkboxes",
+  type: "RadioButtons",
+  displayName: "Radio Button",
   group: "Options Components"
 };
 
 var initialState$1 = function initialState() {
   return _extends({}, defaultConfig, info$1, {
-    htmlInputType: "checkbox"
+    htmlInputType: "radio"
   });
 };
 
-var Checkboxes = {
+var RadioButtons = {
   info: info$1,
   initialState: initialState$1,
   RenderEditor: View(initialState$1)
@@ -31476,19 +31476,6 @@ var Dropdown = {
   RenderEditor: View(initialState$2)
 };
 
-// Creates a new object with properties of the old one
-// ovewritten by properties of the new object.
-// No new properties of the new Object are added.
-// overshadow Object -> Object -> Object
-function overshadow(oldObj, newObj) {
-  return Object.keys(oldObj).reduce(function (result, key) {
-    // We want to use values from newObj even if the value is set to undefined,
-    // but not use it if it is not set at all. That's why we use hasOwnProperty.
-    result[key] = newObj.hasOwnProperty(key) ? newObj[key] : oldObj[key]; // eslint-disable-line no-param-reassign, max-len
-    return result;
-  }, {});
-}
-
 /**
  *
  *
@@ -31504,7 +31491,7 @@ var updateField = curry_1$1(function (update, state, initialState, fieldName, ev
   var value = event.target.value;
   // Update or fallback to default value
   var newValue = value || initialState[fieldName];
-  var newState = overshadow(state, defineProperty$4({}, fieldName, newValue));
+  var newState = Object.assign({}, state, defineProperty$4({}, fieldName, newValue));
   update(newState);
 });
 
@@ -31595,7 +31582,7 @@ var RenderFormMode = function RenderFormMode(_ref2) {
 };
 
 function buildTextFieldConstructor(customTypeInfo) {
-  var typeInfo = overshadow(templateTypeInfo, customTypeInfo);
+  var typeInfo = Object.assign({}, templateTypeInfo, customTypeInfo);
 
   var initialState = createInitialState(typeInfo, componentFields);
 
@@ -31618,40 +31605,35 @@ function buildTextFieldConstructor(customTypeInfo) {
   return FieldConstructor;
 }
 
-var TextBox = buildTextFieldConstructor({
-  type: 'TextBox',
-  displayName: 'Text Box',
-  htmlInputType: 'text'
-});
-
-var TextBox$2 = buildTextFieldConstructor({
-  type: 'TextArea',
-  displayName: 'Text Area',
-  htmlElement: 'textarea'
-});
-
 var EmailBox = buildTextFieldConstructor({
   type: 'EmailBox',
   displayName: 'Email Box',
   htmlInputType: 'email'
 });
 
-var TextBox$3 = buildTextFieldConstructor({
+var TextBox = buildTextFieldConstructor({
   type: 'NumberBox',
   displayName: 'Number Box',
   htmlInputType: 'number'
 });
 
-var TextBox$4 = buildTextFieldConstructor({
+var TextBox$1 = buildTextFieldConstructor({
   type: 'TelephoneBox',
   displayName: 'Telephone Box',
   htmlInputType: 'tel'
 });
 
-// Field Types
-var baseTypes = [RadioButtons, Checkboxes, Dropdown, TextBox, EmailBox, TextBox$4, TextBox$3, TextBox$2];
+var TextBox$2 = buildTextFieldConstructor({
+  type: 'TextBox',
+  displayName: 'Text Box',
+  htmlInputType: 'text'
+});
 
-var compositeTypes = [];
+var TextBox$4 = buildTextFieldConstructor({
+  type: 'TextArea',
+  displayName: 'Text Area',
+  htmlElement: 'textarea'
+});
 
 var convert$2 = convert_1;
 var func$1 = convert$2('get', get_1);
@@ -31986,8 +31968,8 @@ var validateDateComponents = function validateDateComponents(appMinDate, appMaxD
 
 var typeInfo = {
   // Compulsory
-  type: 'DateField',
-  displayName: 'Date Field',
+  type: 'DateBox',
+  displayName: 'Date Box',
   group: 'Text Components',
   required: false,
   configShowing: false,
@@ -32144,13 +32126,7 @@ var ImageCards = {
   RenderEditor: RenderEditor
 };
 
-var customTypes = [ImageCards];
-
-var allTypes = {
-  baseTypes: baseTypes,
-  customTypes: customTypes,
-  compositeTypes: compositeTypes
-};
+var allTypes = [Checkboxes, RadioButtons, Dropdown, EmailBox, TextBox, TextBox$1, TextBox$2, TextBox$4, ImageCards];
 
 /* eslint-env jasmine */
 
@@ -32589,15 +32565,12 @@ describe("Dropdown.View with config not showing", function () {
 /* eslint-env jasmine */
 describe("Smoke test", function () {
   it("exports the public API", function () {
-    expect(Object.keys(allTypes).includes("baseTypes")).toBeTruthy();
-    expect(Object.keys(allTypes).includes("customTypes")).toBeTruthy();
-    expect(Object.keys(allTypes).includes("compositeTypes")).toBeTruthy();
+    expect(Array.isArray(allTypes)).toBeTruthy();
+    expect(allTypes.length > 5).toBeTruthy();
   });
 });
 
-allTypes.baseTypes.map(apiTest);
-allTypes.customTypes.map(apiTest);
-allTypes.compositeTypes.map(apiTest);
+allTypes.forEach(apiTest);
 
 })));
 //# sourceMappingURL=fl-form-fields-tests.js.map
