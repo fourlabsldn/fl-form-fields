@@ -10,8 +10,8 @@ import DateBox from "./types/DateBox";
 
 export default [
   Dropdown,
-  Checkboxes,
   RadioButtons,
+  Checkboxes,
   Email,
   NumberBox,
   Telephone,
