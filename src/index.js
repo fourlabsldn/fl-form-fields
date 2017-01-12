@@ -9,9 +9,9 @@ import TextArea from "./types/TextArea";
 import DateBox from "./types/DateBox";
 
 export default [
+  Dropdown,
   Checkboxes,
   RadioButtons,
-  Dropdown,
   Email,
   NumberBox,
   Telephone,
