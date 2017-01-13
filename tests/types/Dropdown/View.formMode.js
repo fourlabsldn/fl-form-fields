@@ -2,7 +2,7 @@
 /* eslint-disable quote-props */
 
 import ReactDOM from "react-dom";
-import Dropdown from "../../../src/types/Dropdown";
+import Dropdown from "../../../src/js/types/Dropdown";
 
 const mockState = {
   "type": "Dropdown",

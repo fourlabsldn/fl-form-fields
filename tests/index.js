@@ -1,6 +1,6 @@
 /* eslint-env jasmine */
 import "babel-polyfill";
-import allTypes from "../src";
+import allTypes from "../src/js/";
 
 describe("Smoke test", () => {
   it("exports the public API", () => {

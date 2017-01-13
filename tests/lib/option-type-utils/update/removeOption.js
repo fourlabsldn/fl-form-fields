@@ -1,6 +1,6 @@
 /* eslint-env jasmine */
-import update from "../../../../src/lib/option-type-utils/update";
-import { removeOption } from "../../../../src/lib/option-type-utils/actions";
+import update from "../../../../src/js/lib/option-type-utils/update";
+import { removeOption } from "../../../../src/js/lib/option-type-utils/actions";
 
 describe("option-type update.removeOption", () => {
   const mockState = {

@@ -5,7 +5,7 @@ import {
   removeIfOptionIsNull,
   updateOption,
   updateProperty,
-} from "../../../src/lib/option-type-utils/actions";
+} from "../../../src/js/lib/option-type-utils/actions";
 
 describe("action addOption", () => {
   it("outputs the correct type", () => {

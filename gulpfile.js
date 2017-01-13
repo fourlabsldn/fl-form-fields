@@ -9,10 +9,16 @@ organiser.registerAll("./gulp-tasks", {
   "test-headless": {
     src: "./dist/fl-form-fields-tests.js",
   },
+  "sass": {
+    watch: path.join(src, "scss/**/*.scss"),
+    src: path.join(src, "scss/index.scss"),
+    rename: "fl-form-fields.css",
+    dest,
+  },
   "transpile-react": {
     "main": {
-      watch: path.join(src, "/**/*.js"),
-      src: path.join(src, "index.js"),
+      watch: path.join(src, "js/**/*.js"),
+      src: path.join(src, "js/index.js"),
       dest,
       rename: "fl-form-fields.js",
       config: {
@@ -40,6 +46,6 @@ organiser.registerAll("./gulp-tasks", {
   },
   "watch": {
     src: ".",
-    taskNames: ["transpile-react:tests", "transpile-react:main"],
+    taskNames: ["transpile-react:tests", "transpile-react:main", "sass"],
   },
 });
