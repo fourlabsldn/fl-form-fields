@@ -1,7 +1,5 @@
 /* eslint-disable quote-props */
 // List all available tasks
-require('babel-core/register');
-
 const src = "src";
 const dest = "dist";
 const path = require("path");
@@ -37,7 +35,7 @@ organiser.registerAll("./gulp-tasks", {
   "browser-sync": {
     src: ".", // it doesn"t matter, it"s just so the task object is not ignored.
     reloadOn: ["transpile-react"], // reload page when these tasks happen
-    startPath: "examples/all_fields/index.html",
+    startPath: "examples/bare-fields/index.html",
     baseDir: "./",
   },
   "watch": {

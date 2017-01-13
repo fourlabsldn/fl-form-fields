@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <!-- Polyfills for IE9 -->
+    <!--
+          If you are supporting IE9 you need to include babel-polyfill in your page
+          This demo alredy has the polyfills included in the test files
+    -->
+
+    <!-- Jasmine -->
+    <link rel="stylesheet" type="text/css" href="../../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+    <script type="text/javascript" src="../../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+    <!-- Tests  -->
+    <script type="text/javascript" src="../../dist/fl-form-fields-tests.js"></script>
+
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.8/react-dom.min.js"></script>
+
+    <!-- Form Fields -->
+    <script src="../../dist/fl-form-fields.js"></script>
+
+    <style>
+      body {
+        max-width: 700px;
+        margin: auto;
+      }
+    </style>
+</head>
+
+<body>
+
+    <div class="container"></div>
+
+    <script>
+        // Our custom components array:
+        var container = document.querySelector('.container');
+
+        flFormFields.map(field => {
+          const fieldContainer = document.createElement('div');
+          ReactDOM.render(
+            field.RenderEditor({ state: field.initialState(), update: _ => _ }),
+            fieldContainer
+          );
+          return fieldContainer;
+        })
+        .map(fieldContainer => container.appendChild(fieldContainer));
+    </script>
+</body>
+
+</html>
