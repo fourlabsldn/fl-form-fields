@@ -36,7 +36,12 @@ const formView = curry((state, update, option) =>
   </div>
 ));
 
-export default (state, update) =>
-  state.configShowing
-    ? state.options.map(configView(state, update))
-    : state.options.map(formView(state, update));
+export default ({ state, update }) =>
+(
+  <div>
+    {state.configShowing
+      ? state.options.map(configView(state, update))
+      : state.options.map(formView(state, update))
+    }
+  </div>
+);

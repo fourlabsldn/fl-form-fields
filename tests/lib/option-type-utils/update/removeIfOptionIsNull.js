@@ -21,14 +21,14 @@ describe("option-type update.removeIfOptionIsNull", () => {
     expect(newState.options[0]).toBe(mockState.options[1]);
     expect(newState.options[1]).toBe(mockState.options[2]);
 
-    const mockEvent2 = { target: { value: "eventValue" } };
+    const mockEvent2 = { target: { value: undefined } };
     const action2 = removeIfOptionIsNull(1, mockEvent2);
     const newState2 = update(mockState, action2);
     expect(newState2.options.length).toBe(mockState.options.length - 1);
     expect(newState2.options[0]).toBe(mockState.options[0]);
     expect(newState2.options[1]).toBe(mockState.options[2]);
 
-    const mockEvent3 = { target: { value: "eventValue" } };
+    const mockEvent3 = { target: { value: null } };
     const action3 = removeIfOptionIsNull(2, mockEvent3);
     const newState4 = update(mockState, action3);
     expect(newState4.options.length).toBe(mockState.options.length - 1);

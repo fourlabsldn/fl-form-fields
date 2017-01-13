@@ -1,18 +1,24 @@
+import { curry } from "ramda";
 import addOption from "./addOption";
 import removeOption from "./removeOption";
 import updateOption from "./updateOption";
 import removeIfOptionIsNull from "./removeIfOptionIsNull";
-import updateProperty from "./updateProperty";
+import setNewOptionCaption from "./setNewOptionCaption";
+import toggleRequired from "./toggleRequired";
+import updateTitle from "./updateTitle";
 
 const possibleActions = {
   addOption,
   removeOption,
   updateOption,
   removeIfOptionIsNull,
-  updateProperty,
+  setNewOptionCaption,
+  toggleRequired,
+  updateTitle,
 };
 
-const update = (state, action) =>
-  possibleActions[action.type](state, action);
+const update = curry((state, action) =>
+  possibleActions[action.type](state, action)
+);
 
 export default update;

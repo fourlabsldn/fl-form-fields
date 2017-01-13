@@ -1,4 +1,7 @@
 import "./addOption";
 import "./updateOption";
-import "./updateProperty";
+import "./setNewOptionCaption";
 import "./removeOption";
+import "./removeIfOptionIsNull";
+import "./toggleRequired";
+import "./updateTitle";

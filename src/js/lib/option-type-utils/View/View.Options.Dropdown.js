@@ -18,7 +18,7 @@ const configView = curry((state, update, option, optionIndex) =>
   </div>
 ));
 
-const formView = state =>
+const FormView = ({ state }) =>
 (
   <select className="form-control">
     <option disabled>Please select an option</option>
@@ -29,7 +29,7 @@ const formView = state =>
   </select>
 );
 
-export default (state, update) =>
+export default ({ state, update }) =>
   state.configShowing
-    ? state.options.map(configView(state, update))
-    : formView(state);
+    ? <div>{state.options.map(configView(state, update))}</div>
+    : <FormView state={state} />;

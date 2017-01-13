@@ -1,18 +1,12 @@
 /* eslint-disable new-cap */
 
 import React from "react";
+import ViewWrapper from "../../View.Wrapper";
 import validate from "./validate";
-import { curry } from "lodash/fp";
 import ifEnterPressed from "./ifEnterPressed";
-import stateUpdate from "../update";
-import { updateProperty, removeOption, addOption } from "../actions";
-import dropdownOptions from "./View.options.Dropdown";
-import checkRadioOptions from "./View.options.CheckRadio";
-
-const renderOptions = (state, update) =>
-  state.type === "Dropdown"
-    ? dropdownOptions(state, update)
-    : checkRadioOptions(state, update);
+import reducer from "../update";
+import { setNewOptionCaption, removeOption, addOption, toggleRequired, updateTitle } from "../actions";
+import Options from "./View.Options";
 
 /**
  * When configuration is open, this is what is going to be displayed
@@ -20,19 +14,11 @@ const renderOptions = (state, update) =>
  * @param  {Object} state : State
  * @param  {Function} update : State -> void // Will trigger a re-render
  */
-const ConfigurationView = (initialState, { state, update }) => {
-  return (
+const ConfigurationView = initialState =>
+  ({ state, update }) =>
+  (
     <div>
-      <h2>
-        <input
-          type="text"
-          className="fl-fb-Field-editable"
-          onChange={e => update(updateProperty(initialState, "title", e))}
-          defaultValue={state.title}
-        />
-      </h2>
-
-      {renderOptions(state, update)}
+      <Options state={state} update={update} />
 
       <div className="fl-fb-Field-config">
         <button
@@ -48,30 +34,35 @@ const ConfigurationView = (initialState, { state, update }) => {
           type="text"
           value={state.newOptionCaption}
           placeholder="Type a new option caption"
-          onChange={e => update(updateProperty(initialState, "newOptionCaption", e))}
+          onChange={e => update(setNewOptionCaption(e))}
           onKeyPress={ifEnterPressed(() => update(addOption(initialState)))}
         />
       </div>
     </div>
   );
-};
 
 // Renders the element without the config being open
 const FormView = ({ state, update }) =>
-(
-  <div>
-    <h2>{state.title}</h2>
-    {renderOptions(state, update)}
-  </div>
-);
+  <Options state={state} update={update} />;
 
-const View = curry((initialState, { state, update }) => {
-  validate(state);
-  const newUpdate = action => update(stateUpdate(state, action));
+export default initialState =>
+  ({ state, update: setState }) => {
+    validate(state);
 
-  return state.configShowing
-    ? ConfigurationView(initialState, { state, update: newUpdate })
-    : FormView({ state, update: newUpdate });
-});
+    const ViewToUse = state.configShowing
+      ? ConfigurationView(initialState)
+      : FormView;
 
-export default View;
+    const update = action => setState(reducer(state, action));
+
+    return (
+      <ViewWrapper
+        state={state}
+        update={update}
+        toggleRequired={toggleRequired}
+        updateTitle={updateTitle(initialState)}
+      >
+        <ViewToUse state={state} update={update} />
+      </ViewWrapper>
+    );
+  };

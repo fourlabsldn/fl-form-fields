@@ -1,3 +1,4 @@
+import { curry } from "ramda";
 // Possible state-changing actions
 
 export const addOption = (initialState) =>
@@ -25,10 +26,22 @@ export const updateOption = (optionIndex, event) =>
     event,
   });
 
-export const updateProperty = (initialState, propName, event) =>
+export const toggleRequired = required =>
   ({
-    type: "updateProperty",
+    type: "toggleRequired",
+    required,
+  });
+
+export const updateTitle = curry((initialState, event) =>
+  ({
+    type: "updateTitle",
     initialState,
-    propName,
+    event,
+  })
+);
+
+export const setNewOptionCaption = event =>
+  ({
+    type: "setNewOptionCaption",
     event,
   });
