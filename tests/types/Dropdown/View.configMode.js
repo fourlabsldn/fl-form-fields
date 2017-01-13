@@ -41,6 +41,11 @@ describe("Dropdown.View with config showing", () => {
     expect(titleInput.value).toBe(mockState.title);
   });
 
+  it("adds the fl-FormField-editable class to the title's input", () => {
+    const titleInput = container.querySelector("h2").querySelector("input");
+    expect(titleInput.classList.contains("fl-FormField-editable")).toBe(true);
+  });
+
   it("makes options editable", () => {
     const inputs = container.querySelectorAll("input");
     const inputsContents = [].map.call(inputs, i => i.value);
@@ -49,6 +54,14 @@ describe("Dropdown.View with config showing", () => {
     expect(inputsContents.indexOf(mockState.options[1].caption)).not.toBe(-1);
     expect(inputsContents.indexOf(mockState.options[2].caption)).not.toBe(-1);
   });
+
+  it("adds the fl-FormField-editable class to editable options inputs", () => {
+    const options = container.querySelectorAll("fl-fb-Field-option");
+    const inputs = Array.from(options).map(o => o.querySelector('input'));
+    const inputsHaveEditableClass = [].map.call(inputs, i => i.classList.contains("fl-FormField-editable"));
+    expect(inputsHaveEditableClass.indexOf(false)).toBe(-1);
+  });
+
 
   it("creates an input box for new options", () => {
     const newOptionInput = container.querySelector(`input[value="${mockState.newOptionCaption}"]`);

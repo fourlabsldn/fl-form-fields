@@ -18,12 +18,12 @@ const Footer = ({ toggleRequired, state, update }) =>
 
 const Title = ({ updateTitle, state, update }) =>
   !state.configShowing
-    ? <h2>{state.title}</h2>
+    ? <h2 className="fl-FormField-title">{state.title}</h2>
     : (
-    <h2>
+    <h2 className="fl-FormField-title">
       <input
         type="text"
-        className="fl-fb-Field-editable"
+        className="fl-FormField-editable"
         onChange={e => update(updateTitle(e))}
         defaultValue={state.title}
       />

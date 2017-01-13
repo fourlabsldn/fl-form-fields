@@ -7,7 +7,7 @@ const configView = curry((state, update, option, optionIndex) =>
 (
   <div className="fl-fb-Field-option">
     <input
-      className="fl-fb-Field-editable"
+      className="fl-FormField-editable"
       type="text"
       value={option.caption}
       onKeyPress={ifEnterPressed(
